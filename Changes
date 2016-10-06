@@ -5,6 +5,7 @@ Revision history for Perl extension Pod::ProjectDocs.
       systems without changing all the time.
     - Generate Perl package documentation with proper :: separators in package name.
     - Ignore files which don't contain POD.
+    - Correctly skip content in data sections (between =begin and =end).
 
 0.40 Tue Oct 26 02:54:00 2010
     - removed auto_install from Makefile.PM. Thanks to tokuhirom.

@@ -208,6 +208,9 @@ sub _addCommand {
         return;
     }
 
+    # skip if we are actually in a "dataSection" (between =begin and =end)
+    return if @{$self->{dataSections}} && ($command ne 'begin' && $command ne 'end');
+
     for ($command) {
         /^head1/ && do {
             $anchor = $self->_addSection( 'head1', $paragraph );
