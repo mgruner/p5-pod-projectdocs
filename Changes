@@ -4,6 +4,7 @@ Revision history for Perl extension Pod::ProjectDocs.
     - Fixed JSON output to generate stable structures that can be added to version control
       systems without changing all the time.
     - Generate Perl package documentation with proper :: separators in package name.
+    - Ignore files which don't contain POD.
 
 0.40 Tue Oct 26 02:54:00 2010
     - removed auto_install from Makefile.PM. Thanks to tokuhirom.

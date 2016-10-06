@@ -4,6 +4,7 @@ use warnings;
 use base qw/Class::Accessor::Fast/;
 
 use File::Find;
+use IO::File;
 use Pod::ProjectDocs::Doc;
 
 __PACKAGE__->mk_accessors(qw/
@@ -61,6 +62,11 @@ sub _find_files {
                         last;
                     }
                 }
+
+                # check if there is actually any POD inside, skip otherwise
+                my $content = join('', IO::File->new( $File::Find::name, 'r' )->getlines());
+                $matched = 1 if $content !~ m{^=(head1|head2|item|cut)}ismxg;
+
                 unless ($matched) {
                     push @{ $self->docs },
                       Pod::ProjectDocs::Doc->new(
@@ -140,4 +146,3 @@ sub reset {
 
 1;
 __END__
-
