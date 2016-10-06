@@ -1,11 +1,15 @@
 Revision history for Perl extension Pod::ProjectDocs.
 
+0.41 pending
+    - Fixed JSON output to generate stable structures that can be added to version control
+      systems without changing all the time.
+
 0.40 Tue Oct 26 02:54:00 2010
     - removed auto_install from Makefile.PM. Thanks to tokuhirom.
       https://github.com/lyokato/p5-pod-projectdocs/pull/2
 
 0.39 Tue Oct 26 02:54:00 2010
-    - updated for windows compatibility. Thanks to wchristian 
+    - updated for windows compatibility. Thanks to wchristian
       http://github.com/lyokato/p5-pod-projectdocs/pull/1
 
 0.38 Thr Mar 11 01:20:00 2010
@@ -120,4 +124,3 @@ Revision history for Perl extension Pod::ProjectDocs.
 0.01  Thu Jun 16 16:52:20 2005
     - original version; created by h2xs 1.23 with options
         -X -A Pod::ProjectDocs
-

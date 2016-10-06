@@ -163,7 +163,9 @@ sub get_managers_json {
             push @$records, $record;
         }
     }
-    return $js->encode($records);
+    # Use "canonical" to generate stable structures that can be added
+    #   to version control systems without changing all the time.
+    return $js->canonical()->encode($records);
 }
 
 sub _croak {
