@@ -638,6 +638,7 @@ sub gen_html {
     my $doc        = $args{doc};
     my $components = $args{components};
     my $mgr_desc   = $args{desc};
+    delete $self->{_source_code};
     open(FILE, $doc->origin) or warn $!;
     while(<FILE>) {
         next unless /^\s*sub\s+(\w+)/;

@@ -2,6 +2,7 @@ Revision history for Perl extension Pod::ProjectDocs.
 
 0.42 ???
     - Fixed race condition on parallel test execution (RT#105374).
+    - Fixed method source code being shown in wrong modules (RT#69545).
 
 0.41 2016-11-07
     - Fixed JSON output to generate stable structures that can be added to version control
