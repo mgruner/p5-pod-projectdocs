@@ -1,6 +1,6 @@
 Revision history for Perl extension Pod::ProjectDocs.
 
-0.42 ???
+0.42 2016-11-07
     - Fixed race condition on parallel test execution (RT#105374).
     - Fixed method source code being shown in wrong modules (RT#69545).
     - Improved verbatim block output to not add tralining lines (RT#15052).
