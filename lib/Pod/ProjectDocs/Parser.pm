@@ -182,7 +182,7 @@ sub _paraExpand {
         $self->_addTextblock( join('', @{$para->{'-ptree'}}) );
     } elsif ($para->{TYPE} eq 'VERBATIM') {
         return if @{$self->{dataSections}};
-        my $paragraph = "<pre>" . join('', @{$para->{'-ptree'}}) . "\n\n</pre>";
+        my $paragraph = "<pre>" . join('', @{$para->{'-ptree'}}) . "\n</pre>";
         my $parent_list = $self->{listKind}[-1];
         if ($parent_list && $parent_list == 2) {
             $paragraph = "<dd>$paragraph</dd>";
