@@ -639,7 +639,8 @@ sub gen_html {
     my $components = $args{components};
     my $mgr_desc   = $args{desc};
     delete $self->{_source_code};
-    open(FILE, $doc->origin) or warn $!;
+    my $charset = $doc->config->charset || 'UTF-8';
+    open(FILE, "<:encoding($charset)", $doc->origin) or warn $!;
     while(<FILE>) {
         next unless /^\s*sub\s+(\w+)/;
         my $method = $1;
@@ -656,7 +657,6 @@ sub gen_html {
     $self->_prepare($doc, $components, $mgr_desc);
 #   local $SIG{__WARN__} = sub { };
 
-    my $charset = $doc->config->charset || 'UTF-8';
     open (my $fh, "<:encoding($charset)", $doc->origin) or warn $!;
     $self->parse_from_filehandle($fh);
     close $fh;
