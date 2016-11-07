@@ -1,6 +1,8 @@
 package Pod::ProjectDocs::CSS;
+
 use strict;
 use warnings;
+
 use base qw/Pod::ProjectDocs::File/;
 use File::Basename;
 
@@ -62,7 +64,7 @@ input { margin: 2px; }
   background: #006699;
   margin: 1ex 0;
   padding: 1px;
-} 
+}
 
 .menubar A {
   padding: 0.8ex;

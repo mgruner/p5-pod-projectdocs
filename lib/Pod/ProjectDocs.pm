@@ -1,4 +1,5 @@
 package Pod::ProjectDocs;
+
 use strict;
 use warnings;
 
@@ -15,8 +16,6 @@ use Pod::ProjectDocs::ArrowImage;
 use Pod::ProjectDocs::IndexPage;
 
 __PACKAGE__->mk_accessors(qw/managers components config/);
-
-our $VERSION = '0.40';
 
 sub new {
     my $class = shift;

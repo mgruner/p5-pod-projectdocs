@@ -1,13 +1,14 @@
 package Pod::ProjectDocs::Parser;
+
 use strict;
 use warnings;
+
 use base qw/Pod::Parser Class::Accessor::Fast Class::Data::Inheritable/;
 use Pod::ParseUtils;
 use URI::Escape;
 use File::Spec;
 use File::Basename;
 use Pod::ProjectDocs::Template;
-
 
 our $METHOD_REGEXP ||= qr/^(\w+).*/;
 

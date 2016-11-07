@@ -1,6 +1,8 @@
 package Pod::ProjectDocs::File;
+
 use strict;
 use warnings;
+
 use base qw/Class::Accessor::Fast Class::Data::Inheritable/;
 
 use IO::File;
@@ -56,4 +58,3 @@ sub _croak {
 
 1;
 __END__
-

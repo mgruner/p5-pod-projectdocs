@@ -1,6 +1,8 @@
 package Pod::ProjectDocs::Doc;
+
 use strict;
 use warnings;
+
 use base qw/Pod::ProjectDocs::File/;
 use File::Basename;
 use File::Spec;

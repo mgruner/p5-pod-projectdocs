@@ -1,4 +1,5 @@
 package Pod::ProjectDocs::Config;
+
 use strict;
 use warnings;
 
@@ -47,4 +48,3 @@ sub _init {
 
 1;
 __END__
-

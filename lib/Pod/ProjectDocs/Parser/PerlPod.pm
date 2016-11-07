@@ -1,8 +1,11 @@
 package Pod::ProjectDocs::Parser::PerlPod;
+
 use strict;
 use warnings;
+
 use base qw/Pod::ProjectDocs::Parser/;
 use URI::Escape;
+
 __PACKAGE__->language('perl');
 
 sub _makeLinkToCommunity {
@@ -12,4 +15,3 @@ sub _makeLinkToCommunity {
 
 1;
 __END__
-

@@ -1,6 +1,8 @@
 package Pod::ProjectDocs::ArrowImage;
+
 use strict;
 use warnings;
+
 use base qw/Pod::ProjectDocs::File/;
 use MIME::Base64;
 use File::Basename;

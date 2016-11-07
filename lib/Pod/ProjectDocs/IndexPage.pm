@@ -1,6 +1,8 @@
 package Pod::ProjectDocs::IndexPage;
+
 use strict;
 use warnings;
+
 use base qw/Pod::ProjectDocs::File/;
 use Pod::ProjectDocs::Template;
 

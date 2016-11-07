@@ -1,8 +1,9 @@
 package Pod::ProjectDocs::DocManager;
+
 use strict;
 use warnings;
-use base qw/Class::Accessor::Fast/;
 
+use base qw/Class::Accessor::Fast/;
 use File::Find;
 use IO::File;
 use Pod::ProjectDocs::Doc;
@@ -111,7 +112,9 @@ sub _croak {
 }
 
 package Pod::ProjectDocs::DocManager::Iterator;
+
 use base qw/Class::Accessor::Fast/;
+
 __PACKAGE__->mk_accessors(qw/manager index/);
 
 sub new {

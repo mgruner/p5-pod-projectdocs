@@ -1,6 +1,8 @@
 package Pod::ProjectDocs::Template;
+
 use strict;
 use warnings;
+
 use Template;
 use File::Basename;
 use File::Spec;
@@ -50,4 +52,3 @@ sub _croak {
 
 1;
 __END__
-
