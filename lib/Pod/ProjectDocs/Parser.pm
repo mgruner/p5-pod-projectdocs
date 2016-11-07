@@ -69,7 +69,7 @@ sub parse_from_filehandle {
 sub initialize {
     my $self = shift;
 
-    $self->{TopLinks} = qq(<p><a href="#<<<G?TOP>>>" class="toplink">Top</a></p>) unless defined $self->{TopLinks};
+    $self->{TopLinks} = qq(<p><a href="#__POD_PROJECTDOCS_TOP_LINK__" class="toplink">Top</a></p>) unless defined $self->{TopLinks};
     $self->{MakeIndex} = 1 unless defined $self->{MakeIndex};
     $self->{MakeMeta} = 1 unless defined $self->{MakeMeta};
     $self->{FragmentOnly} = 0 unless defined $self->{FragmentOnly};
@@ -124,12 +124,12 @@ sub end_pod {
     $self->{buffer} =~ s/(\n?)<\/pre>\s*<pre>/$1/sg; # concatenate 'pre' blocks
     1 while $self->{buffer} =~ s/<pre>(\s+)<\/pre>/$1/sg;
     $self->{buffer} = $self->_makeIndex . $self->{buffer} if $self->{MakeIndex};
-    $self->{buffer} =~ s/<<<G\?TOP>>>/$self->{FirstAnchor}/ge;
+    $self->{buffer} =~ s/__POD_PROJECTDOCS_TOP_LINK__/$self->{FirstAnchor}/ge;
     $self->{buffer} = join "\n", qq[<div class="pod">], $self->{buffer}, "</div>";
 
     # Expand internal L<> links to the correct sections
-    $self->{buffer} =~ s/#<<<(.*?)>>>/'#' . $self->_findSection($1)/eg;
-    die "gotcha" if $self->{buffer} =~ /#<<</;
+    $self->{buffer} =~ s/#__POD_PROJECTDOCS_SECTION_LINK_START__(.*?)__POD_PROJECTDOCS_SECTION_LINK_END__/'#' . $self->_findSection($1)/eg;
+    die "gotcha" if $self->{buffer} =~ /#__POD_PROJECTDOCS/;
 
     my $headblock = sprintf "%s\n%s\n\t<title>%s</title>\n",
         qq(<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">),
@@ -566,7 +566,7 @@ sub seqL {
         # Post-process these links so we can things up to the correct sections
         my $targ = $self->{LinkParser}->node;
         my $text = _htmlEscape( $self->{LinkParser}->text );
-        $string = qq(<a href="#<<<$targ>>>">$text</a>);
+        $string = qq(<a href="#__POD_PROJECTDOCS_SECTION_LINK_START__${targ}__POD_PROJECTDOCS_SECTION_LINK_END__">$text</a>);
     } elsif ($kind eq 'item') {    # link to the other page
         my $targ = $self->_resolvePage($self->{LinkParser}->page);
         my $node = $self->{LinkParser}->node;
