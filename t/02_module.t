@@ -1,5 +1,7 @@
 use strict;
 use warnings;
+use utf8;
+
 use FindBin;
 use Test::More 'no_plan';
 use File::Path qw(  remove_tree );

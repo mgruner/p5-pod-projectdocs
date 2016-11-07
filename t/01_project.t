@@ -1,5 +1,7 @@
 use strict;
 use warnings;
+use utf8;
+
 use FindBin;
 use Test::More 'no_plan';
 use File::Path qw(  remove_tree );
@@ -26,7 +28,7 @@ like $html, qr!href="../podstyle.css"!;
 like $html, qr!href="../index.html"!;
 like $html, qr!href="../src/Sample/Project.pm"!;
 like $html, qr!src="../up.gif"!;
-like $html, qr!m‰h!;
+like $html, qr!m√§h!;
 
 open my $i_fh, "<:encoding(UTF-8)", "$FindBin::Bin/01_project_output/index.html";
 my $index_html = join '', <$i_fh>;

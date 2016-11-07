@@ -655,7 +655,12 @@ sub gen_html {
     $self->current_files_output_path( $doc->get_output_path );
     $self->_prepare($doc, $components, $mgr_desc);
 #   local $SIG{__WARN__} = sub { };
-    $self->parse_from_file($doc->origin);
+
+    my $charset = $doc->config->charset || 'UTF-8';
+    open (my $fh, "<:encoding($charset)", $doc->origin) or warn $!;
+    $self->parse_from_filehandle($fh);
+    close $fh;
+
     my $title = $self->_get_title;
     $doc->title($title);
     $self->current_files_output_path('');
