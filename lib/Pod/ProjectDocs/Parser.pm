@@ -12,18 +12,6 @@ use Pod::ProjectDocs::Template;
 
 our $METHOD_REGEXP ||= qr/^(\w+).*/;
 
-BEGIN {
-    our $HIGHLIGHTER;
-    eval {
-        require Syntax::Highlight::Universal;
-        $HIGHLIGHTER = Syntax::Highlight::Universal->new;
-    };
-    *highlighten = $HIGHLIGHTER ? sub {
-        my ($self, $type, $str) = @_;
-        $HIGHLIGHTER->highlight($type, $str);
-    } : sub { return $_[2] };
-}
-
 # most of code is borrowed from Pod::Xhtml
 __PACKAGE__->mk_accessors(qw/components local_modules current_files_output_path/);
 __PACKAGE__->mk_classdata($_) for qw/COMMANDS SEQ language/;
@@ -651,8 +639,7 @@ sub gen_html {
             $sub .= $_;
             last if /^}/;
         }
-        my $result = $self->highlighten("perl", $sub);
-        $self->{_source_code}{$method} = $result;
+        $self->{_source_code}{$method} = $sub;
     }
     close(FILE);
     $self->current_files_output_path( $doc->get_output_path );
