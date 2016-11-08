@@ -3,7 +3,7 @@ use warnings;
 use utf8;
 
 use FindBin;
-use Test::More tests => 5;
+use Test::More tests => 7;
 use File::Path qw( remove_tree );
 
 use lib '../lib';
@@ -29,5 +29,9 @@ like $html, qr!>bar<!;
 
 # character escapes
 like $html, qr!&lt; &gt; \| / &eacute; &#x201E; &#61; &#181;!;
+
+# links
+like $html, qr!<h1 id="quot_content_get_quot">&quot;\$content = get\( ... \)&quot;!;
+like $html, qr!<a href="#quot_content_get_quot">get</a> function does foo!;
 
 remove_tree( "$FindBin::Bin/02_module_output" );
