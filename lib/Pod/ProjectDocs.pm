@@ -178,7 +178,7 @@ __END__
 
 =head1 NAME
 
-Pod::ProjectDocs - generates CPAN like pod pages
+Pod::ProjectDocs - generates CPAN like project documents from pod.
 
 =head1 SYNOPSIS
 
@@ -186,8 +186,8 @@ Pod::ProjectDocs - generates CPAN like pod pages
     use strict;
     use Pod::ProjectDocs;
     my $pd = Pod::ProjectDocs->new(
-        outroot => '/output/directory',
         libroot => '/your/project/lib/root',
+        outroot => '/output/directory',
         title   => 'ProjectName',
     );
     $pd->gen();
@@ -198,13 +198,7 @@ Pod::ProjectDocs - generates CPAN like pod pages
 =head1 DESCRIPTION
 
 This module allows you to generates CPAN like pod pages from your modules (not only perl but also javascript including pod)
-for your projects. Set your library modules' root directory with libroot option.
-And you have to set output directory's path with outroot option.
-And this module searches your pm and pod files from your libroot, and generates
-html files, and an index page lists up all your modules there.
-
-See the generated pages via HTTP with your browser.
-Your documents of your modules are displayed like CPAN website.
+for your projects. It also creates an optional index page.
 
 =head1 OPTIONS
 
@@ -212,11 +206,11 @@ Your documents of your modules are displayed like CPAN website.
 
 =item outroot
 
-directory where you want to put the generated docs into.
+output directory for the generated documentation.
 
 =item libroot
 
-your library's root directory
+your library's (source code) root directory.
 
 You can set single path by string, or multiple by arrayref.
 
@@ -242,24 +236,23 @@ description for your project.
 
 =item charset
 
-This is used in meta tag. default 'UTF-8'
+charset for source files and generated HTML files (default 'UTF-8').
 
 =item index
 
-whether you want to create index on each pod pages or not.
-set 1 or 0.
+whether you want to create an index for all generated pages (0 or 1).
 
 =item lang
 
-what language is set for xml:lang
+set this language as xml:lang (default 'en')
 
 =item forcegen
 
-whether you want to generate HTML document even if source files are not updated. default is 0.
+whether you want to generate HTML document even if source files are not updated (default is 0).
 
 =item except
 
-if you set this parameter as regex, the file matches this regex won't be checked.
+the files matches this regex won't be parsed.
 
   Pod::ProjectDocs->new(
     except => qr/^specific_dir\//,
@@ -275,15 +268,10 @@ if you set this parameter as regex, the file matches this regex won't be checked
 
 =head1 pod2projdocs
 
-You need not to write script with this module,
-I put the script named 'pod2projdocs' in this package.
-At first, please execute follows.
+You can use the command line script L<pod2projdocs> to generate your documentation
+without creating a custom perl script.
 
     pod2projdocs -help
-
-or
-
-    pod2projdocs -?
 
 =head1 SEE ALSO
 

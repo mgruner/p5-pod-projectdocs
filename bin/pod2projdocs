@@ -56,8 +56,8 @@ pod2projdocs [options]
     -lib         your project's library-root-directory path
     -title       your project's title
     -desc        your project's description
-    -charset     this is used in meta tag in html (default 'UTF-8')
-    -noindex     don't create index for all pod pages
+    -charset     charset for source files and generated HTML files (default 'UTF-8')
+    -noindex     don't create index for all generated pages
     -forcegen    generate documents each time, ignoring last modified timestamp
     -lang        set this language as xml:lang (default 'en')
     -except      the files matches this regex won't be parsed

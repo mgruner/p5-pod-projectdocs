@@ -33,9 +33,10 @@ sub publish {
     $data ||= $self->_get_data();
     my $path = $self->get_output_path;
     my $mode = ">>";
-    $mode .= ":encoding(UTF-8)" if $path =~ m/html$/;
-    my $fh = IO::File->new($path, $mode)
-        or $self->_croak(qq/Can't open $path./);
+    if ( $path =~ m/html$/ ) {
+        $mode .= ':encoding(' . $self->config()->charset() . ')' ;
+    }
+    my $fh = IO::File->new($path, $mode) or $self->_croak(qq/Can't open $path./);
     $fh->seek(0, 0);
     $fh->truncate(0);
     $fh->print($data);
