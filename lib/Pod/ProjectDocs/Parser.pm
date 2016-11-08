@@ -617,20 +617,22 @@ sub seqX {
 sub seqE {
     my $self = shift;
     my $arg = shift;
-    my $rv;
 
     if ($arg eq 'sol') {
-        $rv = '/';
+        return '/';
     } elsif ($arg eq 'verbar') {
-        $rv = '|';
-    } elsif ($arg =~ /^\d$/) {
-        $rv = "&#$arg;";
-    } elsif ($arg =~ /^0?x(\d+)$/) {
-        $rv = $1;
-    } else {
-        $rv = "&$arg;";
+        return '|';
+    } elsif ($arg =~ /^0x([0-9a-f]+)$/i) { # hex number
+        return "&#x$1;";
+    } elsif ($arg =~ /^0[0-7]+$/) { # octal number
+        my $number = oct($arg);
+        return "&#$number;";
+    } elsif ($arg =~ /^\d+$/) { # decimal number
+        return "&#$arg;";
+    } else { # html entity
+        return "&$arg;";
     }
-    return $rv;
+    return;
 }
 
 sub gen_html {

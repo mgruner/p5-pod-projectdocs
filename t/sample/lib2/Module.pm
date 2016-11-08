@@ -34,3 +34,6 @@ bar bar bar
 
 L<Sample::Project>
 
+=head1 CHARACTER ESCAPES
+
+E<lt> E<gt> E<verbar> E<sol> E<eacute> E<0x201E> E<075> E<181>

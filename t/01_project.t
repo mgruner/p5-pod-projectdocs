@@ -3,7 +3,7 @@ use warnings;
 use utf8;
 
 use FindBin;
-use Test::More 'no_plan';
+use Test::More tests => 10;
 use File::Path qw(  remove_tree );
 
 use lib '../lib';

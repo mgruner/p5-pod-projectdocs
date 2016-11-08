@@ -3,8 +3,8 @@ use warnings;
 use utf8;
 
 use FindBin;
-use Test::More 'no_plan';
-use File::Path qw(  remove_tree );
+use Test::More tests => 5;
+use File::Path qw( remove_tree );
 
 use lib '../lib';
 use Pod::ProjectDocs;
@@ -15,7 +15,7 @@ Pod::ProjectDocs->new(
     outroot => "$FindBin::Bin/02_module_output",
     libroot => "$FindBin::Bin/sample/lib2",
     forcegen => 1,
-)->gen;
+)->gen();
 
 # using XML::XPath might be better
 open my $fh, "$FindBin::Bin/02_module_output/Module.pm.html";
@@ -26,5 +26,8 @@ like $html, qr!# foo foo foo!;
 like $html, qr!# bar bar bar!;
 like $html, qr!>\$foo = foo\(\@_\)<!s;
 like $html, qr!>bar<!;
+
+# character escapes
+like $html, qr!&lt; &gt; \| / &eacute; &#x201E; &#61; &#181;!;
 
 remove_tree( "$FindBin::Bin/02_module_output" );

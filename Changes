@@ -2,6 +2,7 @@ Revision history for Perl extension Pod::ProjectDocs.
 
 0.43 ???
     - Properly handle UTF-8 input files by applying the -charset param also when parsing source files.
+    - Fixed handling of character escape sequences (RT#25123).
 
 0.42 2016-11-07
     - Fixed race condition on parallel test execution (RT#105374).
