@@ -1,8 +1,8 @@
 #!/usr/bin/perl -w
 
-eval 'exec /usr/bin/perl -w -S $0 ${1+"$@"}' if 0;
-
 use strict;
+use warnings;
+
 use Getopt::Long;
 use Pod::Usage;
 use Pod::ProjectDocs;
@@ -40,32 +40,32 @@ my $p = Pod::ProjectDocs->new(
     forcegen => $forcegen,
     lang     => $lang,
 );
-$p->gen;
+$p->gen();
 
 =head1 NAME
 
-pod2projdocs - ganerates CPAN like project documents from pod.
+pod2projdocs - generates CPAN like project documents from pod.
 
 =head1 SYNOPSIS
 
 pod2projdocs [options]
 
  Options:
-    -help        display this help and exists
+    -help        display this help and exist
     -out         directory path that you want to generate documents into
     -lib         your project's library-root-directory path
     -title       your project's title
     -desc        your project's description
-    -charset     this is used in meta tag in html. default 'UTF-8'
-    -noindex     don't create index on each pod pages.
-    -forcegen    generate documents each time ignoring last modified timestamp
-    -lang        set this language as xml:lang. default 'en'
-    -except      set regex, and the file matches this regex won't be checked
+    -charset     this is used in meta tag in html (default 'UTF-8')
+    -noindex     don't create index for all pod pages
+    -forcegen    generate documents each time, ignoring last modified timestamp
+    -lang        set this language as xml:lang (default 'en')
+    -except      the files matches this regex won't be parsed
 
- you can set each options with their first alphabet.
+ You can set each option with their first character,
  for example, you can write -o instead of -out.
 
- And you can make documents from multiple library-directories.
+ And you can generate documents from multiple library directories.
 
   pod2projdocs -o /path/to/outputdir -l /path/to/lib1 -l /path/to/lib2
 
@@ -89,4 +89,3 @@ This library is free software. You can redistribute it and/or modify it under
 the same terms as perl itself.
 
 =cut
-
