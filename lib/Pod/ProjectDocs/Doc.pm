@@ -35,7 +35,7 @@ sub _set_relpath {
         $self->name( join "::", File::Spec->splitdir($relpath) );
     }
     else {
-        $self->name( join "-", File::Spec->splitdir($relpath) );
+        $self->name( join "/", File::Spec->splitdir($relpath) );
     }
     $self->relpath($relpath.".".$suffix.".html");
 }

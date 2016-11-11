@@ -93,7 +93,6 @@ sub gen {
     }
 
     my @perl_modules;
-    my @js_libraries;
     foreach my $manager ( @{ $self->managers } ) {
         next if $manager->desc !~ /Perl Modules/;
         my $ite = $manager->doc_iterator();
@@ -101,7 +100,6 @@ sub gen {
             my $name = $doc->name;
             my $path = $doc->get_output_path;
             if ($manager->desc eq 'Perl Modules') {
-                $name =~ s/\-/\:\:/g;
                 push @perl_modules, { name => $name, path => $path };
             }
         }
