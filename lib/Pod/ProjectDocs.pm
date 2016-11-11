@@ -9,8 +9,7 @@ use File::Spec;
 use JSON;
 use Pod::ProjectDocs::DocManager;
 use Pod::ProjectDocs::Config;
-use Pod::ProjectDocs::Parser::PerlPod;
-use Pod::ProjectDocs::Parser::JavaScriptPod;
+use Pod::ProjectDocs::Parser;
 use Pod::ProjectDocs::CSS;
 use Pod::ProjectDocs::ArrowImage;
 use Pod::ProjectDocs::IndexPage;
@@ -64,10 +63,9 @@ sub _setup_components {
 sub _setup_managers {
     my $self = shift;
     $self->reset_managers();
-    $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::Parser::PerlPod->new);
-    $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::Parser::PerlPod->new);
-    $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::Parser::PerlPod->new);
-    $self->add_manager('JavaScript Libraries', 'js', Pod::ProjectDocs::Parser::JavaScriptPod->new);
+    $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::Parser->new);
+    $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::Parser->new);
+    $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::Parser->new);
 }
 
 sub reset_managers {
@@ -97,7 +95,7 @@ sub gen {
     my @perl_modules;
     my @js_libraries;
     foreach my $manager ( @{ $self->managers } ) {
-        next if $manager->desc !~ /(Perl Modules|JavaScript Libraries)/;
+        next if $manager->desc !~ /Perl Modules/;
         my $ite = $manager->doc_iterator();
         while ( my $doc = $ite->next ) {
             my $name = $doc->name;
@@ -106,19 +104,12 @@ sub gen {
                 $name =~ s/\-/\:\:/g;
                 push @perl_modules, { name => $name, path => $path };
             }
-            elsif ($manager->desc eq 'JavaScript Libraries') {
-                $name =~ s/\-/\./g;
-                push @js_libraries, { name => $name, path => $path };
-            }
         }
     }
 
     foreach my $manager ( @{ $self->managers } ) {
 
-        $manager->parser->local_modules( {
-            perl       => \@perl_modules,
-            javascript => \@js_libraries,
-        } );
+        $manager->parser->local_modules( \@perl_modules );
 
         my $ite = $manager->doc_iterator();
         while ( my $doc = $ite->next ) {
@@ -197,7 +188,7 @@ Pod::ProjectDocs - generates CPAN like project documents from pod.
 
 =head1 DESCRIPTION
 
-This module allows you to generates CPAN like pod pages from your modules (not only perl but also javascript including pod)
+This module allows you to generates CPAN like pod pages from your modules
 for your projects. It also creates an optional index page.
 
 =head1 OPTIONS

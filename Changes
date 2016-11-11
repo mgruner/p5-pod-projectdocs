@@ -1,5 +1,8 @@
 Revision history for Perl extension Pod::ProjectDocs.
 
+0.44 ???
+    - Removed support for JavaScript Pod. www.openjsan.org is dead since 2011 and JavaScript has its own specialized documentation format, JSDOC.
+
 0.43 2016-11-07
     - Properly handle UTF-8 input files by applying the -charset param also when parsing source files.
     - Fixed handling of character escape sequences (RT#25123).

@@ -14,7 +14,7 @@ our $METHOD_REGEXP ||= qr/^(\w+).*/;
 
 # most of code is borrowed from Pod::Xhtml
 __PACKAGE__->mk_accessors(qw/components local_modules current_files_output_path/);
-__PACKAGE__->mk_classdata($_) for qw/COMMANDS SEQ language/;
+__PACKAGE__->mk_classdata($_) for qw/COMMANDS SEQ/;
 
 __PACKAGE__->COMMANDS( {
     map { $_ => 1 } qw/pod head1 head2 head3 head4 item over back for begin end/
@@ -570,7 +570,7 @@ sub seqL {
 
 sub _resolvePage {
     my ($self, $page) = @_;
-    my $modules = $self->local_modules->{ $self->language } || [];
+    my $modules = $self->local_modules() || [];
     foreach my $module ( @$modules ) {
         if ( $module->{name} eq $page ) {
             my $targ = $self->_resolveRelPath( $module->{path} );
@@ -580,7 +580,10 @@ sub _resolvePage {
     return $self->_makeLinkToCommunity($page);
 }
 
-sub _makeLinkToCommunity { "abstract method" }
+sub _makeLinkToCommunity {
+    my ($self, $page) = @_;
+    return "http://search.cpan.org/perldoc?" . URI::Escape::uri_escape($page);
+}
 
 sub _resolveRelPath {
     my ($self, $path ) = @_;
