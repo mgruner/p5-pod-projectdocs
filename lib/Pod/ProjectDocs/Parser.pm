@@ -633,18 +633,18 @@ sub gen_html {
     my $mgr_desc   = $args{desc};
     delete $self->{_source_code};
     my $charset = $doc->config->charset || 'UTF-8';
-    open(FILE, "<:encoding($charset)", $doc->origin) or warn $!;
-    while(<FILE>) {
+    open(my $source_fh, "<:encoding($charset)", $doc->origin) or warn $!;
+    while(<$source_fh>) {
         next unless /^\s*sub\s+(\w+)/;
         my $method = $1;
         my $sub = $_;
-        while(<FILE>){
+        while(<$source_fh>){
             $sub .= $_;
             last if /^}/;
         }
         $self->{_source_code}{$method} = $sub;
     }
-    close(FILE);
+    close($source_fh);
     $self->current_files_output_path( $doc->get_output_path );
     $self->_prepare($doc, $components, $mgr_desc);
 #   local $SIG{__WARN__} = sub { };

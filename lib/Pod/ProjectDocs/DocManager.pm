@@ -138,7 +138,7 @@ sub next {
         return $doc;
     }
     else {
-        return undef;
+        return;
     }
 }
 
