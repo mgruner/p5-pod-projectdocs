@@ -1,8 +1,8 @@
-## 0.44 ???
+## 0.44 2016-11-12
 - Removed support for JavaScript Pod. www.openjsan.org is dead since 2011 and JavaScript has its own specialized documentation format, JSDOC.
 - Use '::' as path separator for Perl Modules and '/' otherwise, instead of '-' (github issue#1).
 
-## 0.43 2016-11-07
+## 0.43 2016-11-08
 - Properly handle UTF-8 input files by applying the -charset param also when parsing source files.
 - Fixed handling of character escape sequences (RT#25123).
 - Removed support for broken distribution Syntax::Highlight::Universal.
