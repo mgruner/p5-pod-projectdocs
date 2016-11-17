@@ -109,7 +109,7 @@ sub end_pod {
     # now loop over each para and expand any html escapes or sequences
     $self->_paraExpand( $_ ) foreach (@$ptree);
 
-    $self->{buffer} =~ s/(\n?)<\/pre>\s*<pre>/$1/sg; # concatenate 'pre' blocks
+    $self->{buffer} =~ s/(\n?)<\/pre>\s*<pre>/$1\n/sg; # concatenate 'pre' blocks
     1 while $self->{buffer} =~ s/<pre>(\s+)<\/pre>/$1/sg;
     $self->{buffer} = $self->_makeIndex . $self->{buffer} if $self->{MakeIndex};
     $self->{buffer} =~ s/__POD_PROJECTDOCS_TOP_LINK__/$self->{FirstAnchor}/ge;

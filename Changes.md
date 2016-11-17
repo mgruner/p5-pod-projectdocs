@@ -1,3 +1,6 @@
+## 0.45 2016-11-17
+- Fixed: 0.44 removes empty lines in verbatim sections (#1).
+
 ## 0.44 2016-11-12
 - Removed support for JavaScript Pod. www.openjsan.org is dead since 2011 and JavaScript has its own specialized documentation format, JSDOC.
 - Use '::' as path separator for Perl Modules and '/' otherwise, instead of '-' (github issue#1).
