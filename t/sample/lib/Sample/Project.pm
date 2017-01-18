@@ -19,3 +19,7 @@ I<foo>. See L</SYNOPSIS> for its usage and L<Sample::Module/SYNOPSIS> for Sample
 =head1 SEE ALSO
 
 L<perl>, L<Sample::Module>, L<Pod::ProjectDocs>, L<http://www.perl.org/>, L<Perl POD Syntax|perlpod>
+
+=head1 SOME "DIFFICULT" NODE WITH SPACES
+
+L<Sample::Module/SOME "DIFFICULT" NODE WITH SPACES>

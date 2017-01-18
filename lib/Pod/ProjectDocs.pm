@@ -10,6 +10,7 @@ use JSON;
 use Pod::ProjectDocs::DocManager;
 use Pod::ProjectDocs::Config;
 use Pod::ProjectDocs::Parser;
+use Pod::ProjectDocs::ParserNew;
 use Pod::ProjectDocs::CSS;
 use Pod::ProjectDocs::ArrowImage;
 use Pod::ProjectDocs::IndexPage;
@@ -63,9 +64,9 @@ sub _setup_components {
 sub _setup_managers {
     my $self = shift;
     $self->reset_managers();
-    $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::Parser->new);
-    $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::Parser->new);
-    $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::Parser->new);
+    $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::ParserNew->new);
+    $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::ParserNew->new);
+    $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::ParserNew->new);
 }
 
 sub reset_managers {
@@ -116,6 +117,9 @@ sub gen {
                 desc       => $manager->desc,
                 components => $self->components,
             );
+            use Data::Dumper;
+            print STDERR Dumper(\$html);
+
             if ( $self->config->forcegen || $doc->is_modified ) {
                 $doc->copy_src();
                 $doc->publish($html);

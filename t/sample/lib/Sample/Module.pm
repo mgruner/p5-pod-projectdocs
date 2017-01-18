@@ -16,3 +16,4 @@ Sample::Module - Sample Module
 
 L<Sample::Project>
 
+=head1 SOME "DIFFICULT" NODE WITH SPACES
