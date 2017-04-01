@@ -27,7 +27,7 @@ like $html, qr!<a href="http://search.cpan.org/perldoc\?perlpod">Perl POD Syntax
 like $html, qr!href="../podstyle.css"!;
 like $html, qr!href="../index.html"!;
 like $html, qr!href="../src/Sample/Project.pm"!;
-like $html, qr!m&auml;h!;
+like $html, qr!mäh!;
 
 open my $i_fh, "<:encoding(UTF-8)", "$FindBin::Bin/01_project_output/index.html";
 my $index_html = join '', <$i_fh>;

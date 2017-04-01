@@ -7,7 +7,7 @@ use Getopt::Long;
 use Pod::Usage;
 use Pod::ProjectDocs;
 
-my($out, $lib, $title, $lang, $desc, $charset, $index, $verbose, $forcegen, $except);
+my($out, $lib, $title, $lang, $desc, $index, $verbose, $forcegen, $except);
 my $help = @ARGV == 0;
 
 my %opt = (
@@ -17,7 +17,6 @@ my %opt = (
     'except|e=s@' => \$except,
     'title|t=s'   => \$title,
     'desc|d=s'    => \$desc,
-    'charset|c=s' => \$charset,
     'index!'      => \$index,
     'verbose|v'   => \$verbose,
     'forcegen!'   => \$forcegen,
@@ -34,7 +33,6 @@ my $p = Pod::ProjectDocs->new(
     except   => $except,
     title    => $title,
     desc     => $desc,
-    charset  => $charset,
     index    => $index,
     verbose  => $verbose,
     forcegen => $forcegen,
@@ -56,7 +54,6 @@ pod2projdocs [options]
     -lib         your project's library-root-directory path
     -title       your project's title
     -desc        your project's description
-    -charset     charset for source files and generated HTML files (default 'UTF-8')
     -noindex     don't create index for all generated pages
     -forcegen    generate documents each time, ignoring last modified timestamp
     -lang        set this language as xml:lang (default 'en')

@@ -26,7 +26,7 @@ sub _get_data {
         lang     => $self->config->lang,
         json     => $self->json,
         css      => $self->components->{css}->tag($self),
-        charset  => $self->config->charset || 'UTF-8',
+        charset  => 'UTF-8',
     };
     my $tt = Pod::ProjectDocs::Template->new;
     my $text = $tt->process($self, $self->data, $params);

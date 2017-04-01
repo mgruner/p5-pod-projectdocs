@@ -117,8 +117,6 @@ sub gen {
                 desc       => $manager->desc,
                 components => $self->components,
             );
-            use Data::Dumper;
-            print STDERR Dumper(\$html);
 
             if ( $self->config->forcegen || $doc->is_modified ) {
                 $doc->copy_src();
@@ -226,10 +224,6 @@ your project's name.
 =item desc
 
 description for your project.
-
-=item charset
-
-charset for source files and generated HTML files (default 'UTF-8').
 
 =item index
 
