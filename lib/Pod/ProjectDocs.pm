@@ -10,7 +10,6 @@ use JSON;
 use Pod::ProjectDocs::DocManager;
 use Pod::ProjectDocs::Config;
 use Pod::ProjectDocs::Parser;
-use Pod::ProjectDocs::ParserNew;
 use Pod::ProjectDocs::CSS;
 use Pod::ProjectDocs::ArrowImage;
 use Pod::ProjectDocs::IndexPage;
@@ -64,9 +63,9 @@ sub _setup_components {
 sub _setup_managers {
     my $self = shift;
     $self->reset_managers();
-    $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::ParserNew->new);
-    $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::ParserNew->new);
-    $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::ParserNew->new);
+    $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::Parser->new);
+    $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::Parser->new);
+    $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::Parser->new);
 }
 
 sub reset_managers {
@@ -93,7 +92,8 @@ sub gen {
         $comp->publish();
     }
 
-    my @perl_modules;
+    my %local_modules;
+
     foreach my $manager ( @{ $self->managers } ) {
         next if $manager->desc !~ /Perl Modules/;
         my $ite = $manager->doc_iterator();
@@ -101,14 +101,14 @@ sub gen {
             my $name = $doc->name;
             my $path = $doc->get_output_path;
             if ($manager->desc eq 'Perl Modules') {
-                push @perl_modules, { name => $name, path => $path };
+                $local_modules{$name} = $path;
             }
         }
     }
 
     foreach my $manager ( @{ $self->managers } ) {
 
-        $manager->parser->local_modules( \@perl_modules );
+        $manager->parser->local_modules( \%local_modules );
 
         my $ite = $manager->doc_iterator();
         while ( my $doc = $ite->next ) {
