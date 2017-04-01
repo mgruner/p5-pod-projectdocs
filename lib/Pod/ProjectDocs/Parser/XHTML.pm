@@ -7,6 +7,7 @@ use base qw(Pod::Simple::XHTML);
 
 use File::Basename();
 use File::Spec();
+use HTML::Entities(); # Required for proper entity detection in Pod::Simple::XHTML.
 
 sub new {
     my $class = shift;
