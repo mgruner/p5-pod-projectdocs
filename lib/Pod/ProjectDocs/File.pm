@@ -12,15 +12,16 @@ __PACKAGE__->mk_accessors(qw/config name relpath/);
 __PACKAGE__->is_bin(0);
 
 sub new {
-    my $class = shift;
+    my ($class, @args) = @_;
     my $self  = bless { }, $class;
-    $self->_init(@_);
+    $self->_init(@args);
     return $self;
 }
 
 sub _init {
     my($self, %args) = @_;
     $self->config( $args{config} );
+    return;
 }
 
 sub _get_data {
@@ -41,6 +42,7 @@ sub publish {
     $fh->truncate(0);
     $fh->print($data);
     $fh->close;
+    return;
 }
 
 sub get_output_path {
@@ -55,6 +57,7 @@ sub _croak {
     my($self, $msg) = @_;
     require Carp;
     Carp::croak($msg);
+    return;
 }
 
 1;

@@ -18,6 +18,7 @@ sub _init {
     $self->origin_root( $args{origin_root} );
     $self->suffix( $args{suffix} );
     $self->_set_relpath;
+    return;
 }
 
 sub _set_relpath {
@@ -38,6 +39,7 @@ sub _set_relpath {
         $self->name( join "/", File::Spec->splitdir($relpath) );
     }
     $self->relpath($relpath.".".$suffix.".html");
+    return;
 }
 
 sub _check_dir {
@@ -48,6 +50,7 @@ sub _check_dir {
         $path = File::Spec->catdir($path, $dir);
         $self->_mkdir($path);
     }
+    return;
 }
 
 sub _mkdir {
@@ -56,6 +59,7 @@ sub _mkdir {
         mkdir($path, 0755)
         or $self->_croak(qq/Can't make directory [$path]./);
     }
+    return;
 }
 
 sub get_output_src_path {
@@ -73,6 +77,7 @@ sub copy_src {
     my $origin = $self->origin;
     my $newsrc = $self->get_output_src_path;
     File::Copy::copy($origin, $newsrc);
+    return;
 }
 
 sub is_modified {

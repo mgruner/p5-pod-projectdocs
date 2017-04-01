@@ -24,9 +24,9 @@ Readonly my $DEFAULT_DESC    => qq/manuals and libraries/;
 Readonly my $DEFAULT_LANG    => qq/en/;
 
 sub new {
-    my $class = shift;
+    my ($class, @args) = @_;
     my $self  = bless { }, $class;
-    $self->_init(@_);
+    $self->_init(@args);
     return $self;
 }
 
@@ -41,6 +41,7 @@ sub _init {
     $self->libroot ( $args{libroot}                     );
     $self->forcegen( $args{forcegen}                    );
     $self->except  ( $args{except}                      );
+    return;
 }
 
 1;

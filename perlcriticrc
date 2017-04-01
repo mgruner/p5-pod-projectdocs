@@ -1,4 +1,4 @@
-severity = 5
+severity = 4
 verbose = %m at %f line %l [%p]\n
 
 [TestingAndDebugging::RequireUseStrict]

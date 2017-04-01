@@ -16,6 +16,7 @@ sub _init {
     $self->SUPER::_init(%args);
     $self->json( $args{json} );
     $self->components( $args{components} );
+    return;
 }
 
 sub _get_data {

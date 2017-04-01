@@ -17,9 +17,9 @@ use Pod::ProjectDocs::IndexPage;
 __PACKAGE__->mk_accessors(qw/managers components config/);
 
 sub new {
-    my $class = shift;
+    my ($class, @args) = @_;
     my $self  = bless { }, $class;
-    $self->_init(@_);
+    $self->_init(@args);
     return $self;
 }
 
@@ -49,6 +49,7 @@ sub _init {
 
     $self->_setup_components();
     $self->_setup_managers();
+    return;
 }
 
 sub _setup_components {
@@ -58,6 +59,7 @@ sub _setup_components {
         = Pod::ProjectDocs::CSS->new( config => $self->config );
     $self->components->{arrow}
         = Pod::ProjectDocs::ArrowImage->new( config => $self->config );
+    return;
 }
 
 sub _setup_managers {
@@ -66,11 +68,13 @@ sub _setup_managers {
     $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::Parser->new);
     $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::Parser->new);
     $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::Parser->new);
+    return;
 }
 
 sub reset_managers {
     my $self = shift;
     $self->managers( [] );
+    return;
 }
 
 sub add_manager {
@@ -82,6 +86,7 @@ sub add_manager {
             suffix => $suffix,
             parser => $parser,
         );
+    return;
 }
 
 sub gen {
@@ -97,7 +102,7 @@ sub gen {
     foreach my $manager ( @{ $self->managers } ) {
         next if $manager->desc !~ /Perl Modules/;
         my $ite = $manager->doc_iterator();
-        while ( my $doc = $ite->next ) {
+        while ( my $doc = $ite->next_document() ) {
             my $name = $doc->name;
             my $path = $doc->get_output_path;
             if ($manager->desc eq 'Perl Modules') {
@@ -111,7 +116,7 @@ sub gen {
         $manager->parser->local_modules( \%local_modules );
 
         my $ite = $manager->doc_iterator();
-        while ( my $doc = $ite->next ) {
+        while ( my $doc = $ite->next_document() ) {
             my $html = $manager->parser->gen_html(
                 doc        => $doc,
                 desc       => $manager->desc,
@@ -131,6 +136,7 @@ sub gen {
         json       => $self->get_managers_json,
     );
     $index_page->publish();
+    return;
 }
 
 sub get_managers_json {
@@ -162,6 +168,7 @@ sub _croak {
     my($self, $msg) = @_;
     require Carp;
     Carp::croak($msg);
+    return;
 }
 
 1;

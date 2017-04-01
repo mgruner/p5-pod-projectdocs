@@ -8,9 +8,9 @@ use File::Basename;
 use File::Spec;
 
 sub new {
-    my $class = shift;
+    my ($class, @args) = @_;
     my $self  = bless { }, $class;
-    $self->_init(@_);
+    $self->_init(@args);
     return $self;
 }
 
@@ -33,6 +33,7 @@ sub _init {
             }
         },
     } );
+    return;
 }
 
 sub process {
@@ -48,6 +49,7 @@ sub _croak {
     my($self, $msg) = @_;
     require Carp;
     Carp::croak($msg);
+    return;
 }
 
 1;
