@@ -1,5 +1,8 @@
 package Sample::Project;
 
+use strict;
+use warnings;
+
 1;
 
 __END__

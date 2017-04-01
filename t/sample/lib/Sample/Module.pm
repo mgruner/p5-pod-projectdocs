@@ -1,5 +1,8 @@
 package Sample::Module;
 
+use strict;
+use warnings;
+
 1;
 
 __END__
