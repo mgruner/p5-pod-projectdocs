@@ -270,6 +270,10 @@ L<Pod::Parser>
 
 Lyo Kato E<lt>lyo.kato@gmail.comE<gt>
 
+=head1 MAINTAINER
+
+Martin Gruner
+
 =head1 COPYRIGHT AND LICENSE
 
 Copyright(C) 2005 by Lyo Kato

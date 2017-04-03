@@ -95,6 +95,10 @@ without creating a custom perl script.
 
 Lyo Kato <lyo.kato@gmail.com>
 
+# MAINTAINER
+
+Martin Gruner
+
 # COPYRIGHT AND LICENSE
 
 Copyright(C) 2005 by Lyo Kato
