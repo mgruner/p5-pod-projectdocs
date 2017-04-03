@@ -7,7 +7,6 @@ use base qw/Class::Accessor::Fast/;
 use File::Find;
 use IO::File;
 use Pod::ProjectDocs::Doc;
-use Pod::ProjectDocs::DocManager::Iterator;
 
 __PACKAGE__->mk_accessors(qw/
     config
@@ -87,25 +86,9 @@ sub _find_files {
     return;
 }
 
-sub get_doc_names {
+sub get_docs {
     my $self = shift;
-    my @names = map { $_->name } @{ $self->docs };
-    return wantarray ? @names : \@names;
-}
-
-sub get_docs_num {
-    my $self = shift;
-    return scalar @{ $self->docs };
-}
-
-sub get_doc_at {
-    my ( $self, $index ) = @_;
-    return $self->docs->[$index];
-}
-
-sub doc_iterator {
-    my $self = shift;
-    return Pod::ProjectDocs::DocManager::Iterator->new($self);
+    return @{ $self->docs };
 }
 
 sub _croak {

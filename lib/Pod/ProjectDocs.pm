@@ -11,7 +11,6 @@ use Pod::ProjectDocs::DocManager;
 use Pod::ProjectDocs::Config;
 use Pod::ProjectDocs::Parser;
 use Pod::ProjectDocs::CSS;
-use Pod::ProjectDocs::ArrowImage;
 use Pod::ProjectDocs::IndexPage;
 
 __PACKAGE__->mk_accessors(qw/managers components config/);
@@ -57,8 +56,6 @@ sub _setup_components {
     $self->components( {} );
     $self->components->{css}
         = Pod::ProjectDocs::CSS->new( config => $self->config );
-    $self->components->{arrow}
-        = Pod::ProjectDocs::ArrowImage->new( config => $self->config );
     return;
 }
 
@@ -101,8 +98,7 @@ sub gen {
 
     foreach my $manager ( @{ $self->managers } ) {
         next if $manager->desc !~ /Perl Modules/;
-        my $ite = $manager->doc_iterator();
-        while ( my $doc = $ite->next_document() ) {
+        for my $doc ( $manager->get_docs() ) {
             my $name = $doc->name;
             my $path = $doc->get_output_path;
             if ($manager->desc eq 'Perl Modules') {
@@ -115,8 +111,7 @@ sub gen {
 
         $manager->parser->local_modules( \%local_modules );
 
-        my $ite = $manager->doc_iterator();
-        while ( my $doc = $ite->next_document() ) {
+        for my $doc ( $manager->get_docs() ) {
             my $html = $manager->parser->gen_html(
                 doc        => $doc,
                 desc       => $manager->desc,
