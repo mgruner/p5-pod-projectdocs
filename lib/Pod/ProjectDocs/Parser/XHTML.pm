@@ -16,6 +16,16 @@ sub new {
     return $self;
 }
 
+sub doc {
+    my ($self, $doc) = @_;
+
+    if (defined $doc) {
+        $self->{_doc} = $doc;
+    }
+
+    return $self->{_doc};
+}
+
 sub local_modules {
     my ($self, $modules) = @_;
 
@@ -43,18 +53,55 @@ sub resolve_pod_page_link {
 
     if ($module && $module_map{$module}) {
         $section = defined $section ? '#' . $self->idify( $section, 1 ) : '';
-        return $self->_resolve_rel_path($module_map{$module}) . $section;
+        my ($filename, $directory) = File::Basename::fileparse( $self->current_files_output_path, qr/\.html/ );
+        return File::Spec->abs2rel($module_map{$module}, $directory) . $section;
     }
 
     return $self->SUPER::resolve_pod_page_link($module, $section);
 
 }
 
-sub _resolve_rel_path {
-    my ($self, $path ) = @_;
-    my $curpath = $self->current_files_output_path;
-    my ($name, $dir) = File::Basename::fileparse $curpath, qr/\.html/;
-    return File::Spec->abs2rel($path, $dir);
+#
+# Function overrides to extract the Pod page description, e.g.
+#
+#   =head1 Name
+#
+#   Package::Name - Description line.
+#
+sub start_head1 {
+   my ($self, $attrs) = @_;
+
+   $self->{_in_head1} = 1;
+   return $self->SUPER::start_head1($attrs);
+}
+
+sub end_head1 {
+   my ($self, $attrs) = @_;
+
+   delete $self->{_in_head1};
+   return $self->SUPER::end_head1($attrs);
+}
+
+sub handle_text {
+   my ($self, $text) = @_;
+
+   if ($self->{_titleflag}) {
+       my ($name, $description) = $text =~ m{ ^ \s* ([^-]*?) \s* - \s* (.*?) \s* $}x;
+
+       if ($description && $self->doc()) {
+           $self->doc()->title($description);
+       }
+       delete $self->{_titleflag};
+
+   }
+   elsif ($self->{_in_head1} && $text eq 'NAME') {
+       $self->{_titleflag} = 1;
+   }
+   else {
+       delete $self->{_titleflag};
+   }
+
+   return $self->SUPER::handle_text($text);
 }
 
 1;
