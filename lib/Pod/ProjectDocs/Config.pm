@@ -3,6 +3,8 @@ package Pod::ProjectDocs::Config;
 use strict;
 use warnings;
 
+# VERSION
+
 use base qw/Class::Accessor::Fast/;
 
 use Readonly;

@@ -3,6 +3,8 @@ package Pod::ProjectDocs::Parser;
 use strict;
 use warnings;
 
+# VERSION
+
 use Pod::ProjectDocs::Parser::XHTML;
 use Pod::ProjectDocs::Template;
 

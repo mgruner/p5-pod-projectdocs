@@ -3,6 +3,8 @@ package Pod::ProjectDocs;
 use strict;
 use warnings;
 
+# VERSION
+
 use base qw/Class::Accessor::Fast/;
 
 use File::Spec;

@@ -3,6 +3,8 @@ package Pod::ProjectDocs::File;
 use strict;
 use warnings;
 
+# VERSION
+
 use base qw/Class::Accessor::Fast Class::Data::Inheritable/;
 
 use IO::File;

@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 
+# VERSION
+
 use Getopt::Long;
 use Pod::Usage;
 use Pod::ProjectDocs;

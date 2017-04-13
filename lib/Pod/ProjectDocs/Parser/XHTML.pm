@@ -3,6 +3,8 @@ package Pod::ProjectDocs::Parser::XHTML;
 use strict;
 use warnings;
 
+# VERSION
+
 use base qw(Pod::Simple::XHTML);
 
 use File::Basename();
