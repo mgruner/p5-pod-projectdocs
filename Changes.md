@@ -1,4 +1,4 @@
-## 0.47 2017-04-05 (trial release)
+## 0.47.1 2017-04-13 (trial release)
 - Rewrite of the Parser to use Pod::Simple::XHTML internally instead of legacy Pod::Parser. This fixes some issues with linking and adds proper encoding support based on the Pod command `=encoding`.
 - Therefore the `-charset` parameter was removed. Pod sources are correctly processed as described by the specification, all output files are generated as UTF-8.
 - Support for function source code embedding was removed in order to focus on proper Pod rendering instead.
