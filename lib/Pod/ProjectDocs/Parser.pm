@@ -40,7 +40,7 @@ sub gen_html {
     $parser->html_encode_chars(q{&<>'"});
 
     # Add our custom CSS file.
-    $parser->html_header_tags($parser->html_header_tags() . "\n" . $components->{css}->tag($doc));
+    $parser->html_css($components->{css}->relative_url($doc));
 
     # Generator options.
     $parser->index(1);
@@ -64,6 +64,10 @@ sub gen_html {
     # Add body header section and open <div class="pod">.
     my $header_box = $self->_generate_header_box($doc, $mgr_desc);
     $output =~ s/<body[^>]*>\K/$header_box\n<div class="pod">/;
+
+    # Add HTML language information.
+    my $language = $doc->config()->lang();
+    $output =~ s/<html>/<html lang="$language" xml:lang="$language">/;
 
     return $output;
 }
