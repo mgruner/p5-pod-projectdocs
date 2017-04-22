@@ -51,7 +51,7 @@ sub current_files_output_path {
 sub resolve_pod_page_link {
     my ( $self, $module, $section ) = @_;
 
-    my %module_map = %{$self->local_modules() // {}};
+    my %module_map = %{$self->local_modules() || {}};
 
     if ($module && $module_map{$module}) {
         $section = defined $section ? '#' . $self->idify( $section, 1 ) : '';
