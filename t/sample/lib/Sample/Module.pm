@@ -1,5 +1,8 @@
 package Sample::Module;
 
+use strict;
+use warnings;
+
 1;
 
 __END__
@@ -16,3 +19,4 @@ Sample::Module - Sample Module
 
 L<Sample::Project>
 
+=head1 SOME "DIFFICULT" NODE WITH SPACES

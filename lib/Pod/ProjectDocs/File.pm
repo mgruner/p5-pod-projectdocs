@@ -3,6 +3,8 @@ package Pod::ProjectDocs::File;
 use strict;
 use warnings;
 
+# VERSION
+
 use base qw/Class::Accessor::Fast Class::Data::Inheritable/;
 
 use IO::File;
@@ -12,15 +14,16 @@ __PACKAGE__->mk_accessors(qw/config name relpath/);
 __PACKAGE__->is_bin(0);
 
 sub new {
-    my $class = shift;
+    my ($class, @args) = @_;
     my $self  = bless { }, $class;
-    $self->_init(@_);
+    $self->_init(@args);
     return $self;
 }
 
 sub _init {
     my($self, %args) = @_;
     $self->config( $args{config} );
+    return;
 }
 
 sub _get_data {
@@ -34,13 +37,14 @@ sub publish {
     my $path = $self->get_output_path;
     my $mode = ">>";
     if ( $path =~ m/html$/ ) {
-        $mode .= ':encoding(' . $self->config()->charset() . ')' ;
+        $mode .= ':encoding(UTF-8)' ;
     }
     my $fh = IO::File->new($path, $mode) or $self->_croak(qq/Can't open $path./);
     $fh->seek(0, 0);
     $fh->truncate(0);
     $fh->print($data);
     $fh->close;
+    return;
 }
 
 sub get_output_path {
@@ -55,6 +59,7 @@ sub _croak {
     my($self, $msg) = @_;
     require Carp;
     Carp::croak($msg);
+    return;
 }
 
 1;

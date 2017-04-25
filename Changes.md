@@ -1,3 +1,9 @@
+## 0.48 2017-04-25
+- Rewrite of the Parser to use Pod::Simple::XHTML internally instead of legacy Pod::Parser. This fixes some issues with linking and adds proper encoding support based on the Pod command `=encoding`.
+- Therefore the `-charset` parameter was removed. Pod sources are correctly processed as described by the specification, all output files are generated as UTF-8.
+- Support for function source code embedding was removed in order to focus on proper Pod rendering instead.
+- Fixed support for Perl 5.8 and 5.10 that was missing in 0.45.
+
 ## 0.45 2016-11-17
 - Fixed: 0.44 removes empty lines in verbatim sections (#1).
 

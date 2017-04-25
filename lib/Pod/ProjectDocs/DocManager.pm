@@ -3,6 +3,8 @@ package Pod::ProjectDocs::DocManager;
 use strict;
 use warnings;
 
+# VERSION
+
 use base qw/Class::Accessor::Fast/;
 use File::Find;
 use IO::File;
@@ -17,9 +19,9 @@ __PACKAGE__->mk_accessors(qw/
 /);
 
 sub new {
-    my $class = shift;
+    my ($class, @args) = @_;
     my $self = bless {}, $class;
-    $self->_init(@_);
+    $self->_init(@args);
     return $self;
 }
 
@@ -32,6 +34,7 @@ sub _init {
     $self->parser( $args{parser} );
     $self->docs( [] );
     $self->_find_files;
+    return;
 }
 
 sub _find_files {
@@ -82,69 +85,18 @@ sub _find_files {
         }
     }
     $self->docs( [ sort { $a->name cmp $b->name } @{ $self->docs } ] );
+    return;
 }
 
-sub get_doc_names {
+sub get_docs {
     my $self = shift;
-    my @names = map { $_->name } @{ $self->docs };
-    return wantarray ? @names : \@names;
-}
-
-sub get_docs_num {
-    my $self = shift;
-    return scalar @{ $self->docs };
-}
-
-sub get_doc_at {
-    my ( $self, $index ) = @_;
-    return $self->docs->[$index];
-}
-
-sub doc_iterator {
-    my $self = shift;
-    return Pod::ProjectDocs::DocManager::Iterator->new($self);
+    return @{ $self->docs };
 }
 
 sub _croak {
     my ( $self, $msg ) = @_;
     require Carp;
     Carp::croak($msg);
-}
-
-package Pod::ProjectDocs::DocManager::Iterator;
-
-use base qw/Class::Accessor::Fast/;
-
-__PACKAGE__->mk_accessors(qw/manager index/);
-
-sub new {
-    my $class = shift;
-    my $self = bless {}, $class;
-    $self->_init(@_);
-    return $self;
-}
-
-sub _init {
-    my ( $self, $manager ) = @_;
-    $self->index(0);
-    $self->manager($manager);
-}
-
-sub next {
-    my $self = shift;
-    if ( $self->manager->get_docs_num > $self->index ) {
-        my $doc = $self->manager->get_doc_at( $self->index );
-        $self->index( $self->index + 1 );
-        return $doc;
-    }
-    else {
-        return;
-    }
-}
-
-sub reset {
-    my $self = shift;
-    $self->index(0);
 }
 
 1;

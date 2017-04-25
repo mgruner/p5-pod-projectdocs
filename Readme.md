@@ -54,10 +54,6 @@ for your projects. It also creates an optional index page.
 
     description for your project.
 
-- charset
-
-    charset for source files and generated HTML files (default 'UTF-8').
-
 - index
 
     whether you want to create an index for all generated pages (0 or 1).
@@ -95,9 +91,10 @@ without creating a custom perl script.
 
 [Pod::Parser](https://metacpan.org/pod/Pod::Parser)
 
-# AUTHOR
+# AUTHORS
 
-Lyo Kato <lyo.kato@gmail.com>
+- Lyo Kato <lyo.kato@gmail.com>
+- [Martin Gruner](https://github.com/mgruner) (current maintainer)
 
 # COPYRIGHT AND LICENSE
 

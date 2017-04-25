@@ -1,4 +1,7 @@
-package Sample::Module;
+package Module;
+
+use strict;
+use warnings;
 
 sub foo {
  	# foo foo foo
@@ -14,7 +17,7 @@ __END__
 
 =head1 NAME
 
-Sample::Module - Sample Module
+Module - Sample Module
 
 =head1 SYNOPSIS
 
@@ -29,10 +32,6 @@ foo foo foo
 =head2 bar
 
 bar bar bar
-
-=head1 SEE ALSO
-
-L<Sample::Project>
 
 =head1 CHARACTER ESCAPES
 

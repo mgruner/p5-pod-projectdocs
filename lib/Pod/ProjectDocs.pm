@@ -3,6 +3,8 @@ package Pod::ProjectDocs;
 use strict;
 use warnings;
 
+# VERSION
+
 use base qw/Class::Accessor::Fast/;
 
 use File::Spec;
@@ -11,15 +13,14 @@ use Pod::ProjectDocs::DocManager;
 use Pod::ProjectDocs::Config;
 use Pod::ProjectDocs::Parser;
 use Pod::ProjectDocs::CSS;
-use Pod::ProjectDocs::ArrowImage;
 use Pod::ProjectDocs::IndexPage;
 
 __PACKAGE__->mk_accessors(qw/managers components config/);
 
 sub new {
-    my $class = shift;
+    my ($class, @args) = @_;
     my $self  = bless { }, $class;
-    $self->_init(@_);
+    $self->_init(@args);
     return $self;
 }
 
@@ -49,6 +50,7 @@ sub _init {
 
     $self->_setup_components();
     $self->_setup_managers();
+    return;
 }
 
 sub _setup_components {
@@ -56,8 +58,7 @@ sub _setup_components {
     $self->components( {} );
     $self->components->{css}
         = Pod::ProjectDocs::CSS->new( config => $self->config );
-    $self->components->{arrow}
-        = Pod::ProjectDocs::ArrowImage->new( config => $self->config );
+    return;
 }
 
 sub _setup_managers {
@@ -66,11 +67,13 @@ sub _setup_managers {
     $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::Parser->new);
     $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::Parser->new);
     $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::Parser->new);
+    return;
 }
 
 sub reset_managers {
     my $self = shift;
     $self->managers( [] );
+    return;
 }
 
 sub add_manager {
@@ -82,6 +85,7 @@ sub add_manager {
             suffix => $suffix,
             parser => $parser,
         );
+    return;
 }
 
 sub gen {
@@ -92,30 +96,30 @@ sub gen {
         $comp->publish();
     }
 
-    my @perl_modules;
+    my %local_modules;
+
     foreach my $manager ( @{ $self->managers } ) {
         next if $manager->desc !~ /Perl Modules/;
-        my $ite = $manager->doc_iterator();
-        while ( my $doc = $ite->next ) {
+        for my $doc ( $manager->get_docs() ) {
             my $name = $doc->name;
             my $path = $doc->get_output_path;
             if ($manager->desc eq 'Perl Modules') {
-                push @perl_modules, { name => $name, path => $path };
+                $local_modules{$name} = $path;
             }
         }
     }
 
     foreach my $manager ( @{ $self->managers } ) {
 
-        $manager->parser->local_modules( \@perl_modules );
+        $manager->parser->local_modules( \%local_modules );
 
-        my $ite = $manager->doc_iterator();
-        while ( my $doc = $ite->next ) {
+        for my $doc ( $manager->get_docs() ) {
             my $html = $manager->parser->gen_html(
                 doc        => $doc,
                 desc       => $manager->desc,
                 components => $self->components,
             );
+
             if ( $self->config->forcegen || $doc->is_modified ) {
                 $doc->copy_src();
                 $doc->publish($html);
@@ -129,6 +133,7 @@ sub gen {
         json       => $self->get_managers_json,
     );
     $index_page->publish();
+    return;
 }
 
 sub get_managers_json {
@@ -160,6 +165,7 @@ sub _croak {
     my($self, $msg) = @_;
     require Carp;
     Carp::croak($msg);
+    return;
 }
 
 1;
@@ -223,10 +229,6 @@ your project's name.
 
 description for your project.
 
-=item charset
-
-charset for source files and generated HTML files (default 'UTF-8').
-
 =item index
 
 whether you want to create an index for all generated pages (0 or 1).
@@ -266,9 +268,15 @@ without creating a custom perl script.
 
 L<Pod::Parser>
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Lyo Kato E<lt>lyo.kato@gmail.comE<gt>
+=over 4
+
+=item Lyo Kato E<lt>lyo.kato@gmail.comE<gt>
+
+=item L<Martin Gruner|https://github.com/mgruner> (current maintainer)
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 
