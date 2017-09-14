@@ -5,35 +5,33 @@ use warnings;
 
 # VERSION
 
-use base qw/Class::Accessor::Fast/;
+use Moose;
 use File::Find;
 use IO::File;
 use Pod::ProjectDocs::Doc;
 
-__PACKAGE__->mk_accessors(qw/
-    config
-    desc
-    suffix
-    parser
-    docs
-/);
+has 'config' => (
+    is => 'ro',
+);
+has 'desc' => (
+    is => 'rw',
+    isa => 'Str',
+);
+has 'suffix' => (
+    is => 'rw',
+);
+has 'parser' => (
+    is => 'ro',
+);
+has 'docs' => (
+    is => 'rw',
+    isa => 'ArrayRef',
+    default => sub { [] },
+);
 
-sub new {
-    my ($class, @args) = @_;
-    my $self = bless {}, $class;
-    $self->_init(@args);
-    return $self;
-}
-
-sub _init {
-    my ( $self, %args ) = @_;
-    $args{suffix} = [ $args{suffix} ] unless ref $args{suffix};
-    $self->config( $args{config} );
-    $self->desc( $args{desc} );
-    $self->suffix( $args{suffix} );
-    $self->parser( $args{parser} );
-    $self->docs( [] );
-    $self->_find_files;
+sub BUILD {
+    my $self = shift;
+    $self->_find_files();
     return;
 }
 
@@ -45,6 +43,7 @@ sub _find_files {
         }
     }
     my $suffixs = $self->suffix;
+    $suffixs = [ $suffixs] if !ref $suffixs;
     foreach my $dir ( @{ $self->config->libroot } ) {
         foreach my $suffix (@$suffixs) {
             my $wanted = sub {
@@ -72,7 +71,7 @@ sub _find_files {
                 $matched = 1 if $content !~ m{^=(head1|head2|item|cut)}ismxg;
 
                 unless ($matched) {
-                    push @{ $self->docs },
+                    push @{ $self->docs // [] },
                       Pod::ProjectDocs::Doc->new(
                         config      => $self->config,
                         origin      => $path,

@@ -5,23 +5,14 @@ use warnings;
 
 # VERSION
 
-use base qw/Pod::ProjectDocs::File/;
+use Moose;
+extends 'Pod::ProjectDocs::File';
+
 use File::Basename;
 
-__PACKAGE__->default_name('podstyle.css');
-__PACKAGE__->data( do{ local $/; <DATA> } );
-
-sub relative_url {
-    my($self, $doc) = @_;
-    my($name, $path) = fileparse $doc->get_output_path, qw/\.html/;
-    my $relpath = File::Spec->abs2rel($self->get_output_path, $path);
-    $relpath =~ s:\\:/:g if $^O eq 'MSWin32';
-    return $relpath;
-}
-
-1;
-__DATA__
-
+has 'data' => (
+    is => 'ro',
+    default => <<'DATA',
 BODY, .logo { background: white; }
 
 BODY {
@@ -374,3 +365,21 @@ table.dlsip     {
 .search_highlight {
 	color: #ff6600;
 }
+DATA
+);
+
+sub BUILD {
+    my $self = shift;
+    $self->default_name('podstyle.css');
+    return;
+}
+
+sub relative_url {
+    my($self, $doc) = @_;
+    my($name, $path) = fileparse $doc->get_output_path, qw/\.html/;
+    my $relpath = File::Spec->abs2rel($self->get_output_path, $path);
+    $relpath =~ s:\\:/:g if $^O eq 'MSWin32';
+    return $relpath;
+}
+
+1;

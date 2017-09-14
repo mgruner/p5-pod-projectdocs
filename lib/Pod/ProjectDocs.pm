@@ -5,7 +5,7 @@ use warnings;
 
 # VERSION
 
-use base qw/Class::Accessor::Fast/;
+use Moose;
 
 use File::Spec;
 use JSON;
@@ -15,17 +15,18 @@ use Pod::ProjectDocs::Parser;
 use Pod::ProjectDocs::CSS;
 use Pod::ProjectDocs::IndexPage;
 
-__PACKAGE__->mk_accessors(qw/managers components config/);
+has 'managers' => (
+    is => 'rw',
+);
+has 'components' => (
+    is => 'rw',
+);
+has 'config' => (
+    is => 'rw',
+);
 
-sub new {
-    my ($class, @args) = @_;
-    my $self  = bless { }, $class;
-    $self->_init(@args);
-    return $self;
-}
-
-sub _init {
-    my($self, %args) = @_;
+sub BUILDARGS {
+    my($class, %args) = @_;
 
     # set absolute path to 'outroot'
     $args{outroot} ||= File::Spec->curdir;
@@ -46,7 +47,13 @@ sub _init {
     $args{except} ||= [];
     $args{except} = [ $args{except} ] unless ref $args{except};
 
-    $self->config( Pod::ProjectDocs::Config->new(%args) );
+    $args{config} = Pod::ProjectDocs::Config->new(%args);
+
+    return \%args;
+}
+
+sub BUILD {
+    my $self = shift;
 
     $self->_setup_components();
     $self->_setup_managers();

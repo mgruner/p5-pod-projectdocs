@@ -1,5 +1,6 @@
-## 0.48_002 2017-09-14
+## 0.48_003 2017-09-14
 - Switch to metacpan for perldoc links.
+- Ported to Moose.
 
 ## 0.48 2017-04-25
 - Rewrite of the Parser to use Pod::Simple::XHTML internally instead of legacy Pod::Parser. This fixes some issues with linking and adds proper encoding support based on the Pod command `=encoding`.

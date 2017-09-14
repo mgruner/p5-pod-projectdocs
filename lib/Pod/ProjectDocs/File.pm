@@ -5,26 +5,36 @@ use warnings;
 
 # VERSION
 
-use base qw/Class::Accessor::Fast Class::Data::Inheritable/;
-
+use Moose;
 use IO::File;
 
-__PACKAGE__->mk_classdata($_) for qw/data default_name is_bin/;
-__PACKAGE__->mk_accessors(qw/config name relpath/);
-__PACKAGE__->is_bin(0);
+has 'data' => (
+    is => 'ro',
+);
 
-sub new {
-    my ($class, @args) = @_;
-    my $self  = bless { }, $class;
-    $self->_init(@args);
-    return $self;
-}
+has 'default_name' => (
+    is => 'rw',
+    isa => 'Str',
+);
 
-sub _init {
-    my($self, %args) = @_;
-    $self->config( $args{config} );
-    return;
-}
+has 'is_bin' => (
+    is => 'rw',
+    default => 0,
+);
+
+has 'config' => (
+    is => 'ro',
+);
+
+has 'name' => (
+    is => 'rw',
+    isa => 'Str',
+);
+
+has 'relpath' => (
+    is => 'rw',
+    isa => 'Str',
+);
 
 sub _get_data {
     my $self = shift;

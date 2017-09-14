@@ -5,20 +5,57 @@ use warnings;
 
 # VERSION
 
-use base qw/Pod::ProjectDocs::File/;
+use Moose;
+extends 'Pod::ProjectDocs::File';
+
 use File::Basename;
 use File::Spec;
 use File::Copy;
 
-__PACKAGE__->mk_accessors(qw/origin suffix origin_root title/);
-__PACKAGE__->data( do{ local $/; <DATA> } );
+has 'origin' => (
+    is => 'rw',
+    isa => 'Str',
+);
 
-sub _init {
-    my($self, %args) = @_;
-    $self->SUPER::_init(%args);
-    $self->origin( $args{origin} );
-    $self->origin_root( $args{origin_root} );
-    $self->suffix( $args{suffix} );
+has 'suffix' => (
+    is => 'rw',
+    isa => 'Str',
+);
+
+has 'origin_root' => (
+    is => 'rw',
+    isa => 'Str',
+);
+
+has 'title' => (
+    is => 'rw',
+    isa => 'Str',
+);
+
+has 'data' => (
+    is => 'ro',
+    default => <<'DATA',
+<div class="box">
+  <h1 class="t1">[% title | html %]</h1>
+  <table>
+    <tr>
+      <td class="label">Description</td>
+      <td class="cell">[% desc | html | html_line_break %]</td>
+    </tr>
+  </table>
+</div>
+<div class="path">
+  <a href="[% outroot _ '/index.html' | relpath %]">[% title | html %]</a> &gt; [% mgr_desc | html %] &gt;
+  [% name | html %]
+</div>
+<div>
+<a href="[% src | relpath %]">Source</a>
+</div>
+DATA
+);
+
+sub BUILD {
+    my $self = shift;
     $self->_set_relpath;
     return;
 }
@@ -91,20 +128,3 @@ sub is_modified {
 }
 
 1;
-__DATA__
-<div class="box">
-  <h1 class="t1">[% title | html %]</h1>
-  <table>
-    <tr>
-      <td class="label">Description</td>
-      <td class="cell">[% desc | html | html_line_break %]</td>
-    </tr>
-  </table>
-</div>
-<div class="path">
-  <a href="[% outroot _ '/index.html' | relpath %]">[% title | html %]</a> &gt; [% mgr_desc | html %] &gt;
-  [% name | html %]
-</div>
-<div>
-<a href="[% src | relpath %]">Source</a>
-</div>
