@@ -280,8 +280,13 @@ L<Pod::Simple::XHTML>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright(C) 2005 by Lyo Kato
-Copyright(C) 2017 by Martin Gruner
+=over 4
+
+=item Copyright(C) 2005 by Lyo Kato
+
+=item Copyright(C) 2017 by Martin Gruner
+
+=back
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.5 or,
