@@ -177,9 +177,13 @@ Pod::ProjectDocs - generates CPAN like project documents from pod.
 
 =head1 SYNOPSIS
 
-    #!/usr/bin/perl -w
+    #!/usr/bin/perl
+
     use strict;
+    use warnings;
+
     use Pod::ProjectDocs;
+
     my $pd = Pod::ProjectDocs->new(
         libroot => '/your/project/lib/root',
         outroot => '/output/directory',
@@ -187,7 +191,7 @@ Pod::ProjectDocs - generates CPAN like project documents from pod.
     );
     $pd->gen();
 
-    #or use pod2projdocs on your shell
+    # or use pod2projdocs on your shell
     pod2projdocs -out /output/directory -lib /your/project/lib/root
 
 =head1 DESCRIPTION
@@ -199,11 +203,11 @@ for your projects. It also creates an optional index page.
 
 =over 4
 
-=item outroot
+=item C<outroot>
 
 output directory for the generated documentation.
 
-=item libroot
+=item C<libroot>
 
 your library's (source code) root directory.
 
@@ -221,27 +225,27 @@ or
         libroot => ['/path/to/lib1', '/path/to/lib2'],
     );
 
-=item title
+=item C<title>
 
 your project's name.
 
-=item desc
+=item C<desc>
 
 description for your project.
 
-=item index
+=item C<index>
 
 whether you want to create an index for all generated pages (0 or 1).
 
-=item lang
+=item C<lang>
 
 set this language as xml:lang (default 'en')
 
-=item forcegen
+=item C<forcegen>
 
 whether you want to generate HTML document even if source files are not updated (default is 0).
 
-=item except
+=item C<except>
 
 the files matches this regex won't be parsed.
 
