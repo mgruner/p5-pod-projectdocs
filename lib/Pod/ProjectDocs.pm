@@ -171,6 +171,8 @@ sub _croak {
 1;
 __END__
 
+=encoding utf-8
+
 =head1 NAME
 
 Pod::ProjectDocs - generates CPAN like project documents from pod.
@@ -286,9 +288,9 @@ L<Pod::Simple::XHTML>
 
 =over 4
 
-=item Copyright(C) 2005 by Lyo Kato
+=item © 2005 by Lyo Kato
 
-=item Copyright(C) 2017 by Martin Gruner
+=item © 2017 by Martin Gruner
 
 =back
 
