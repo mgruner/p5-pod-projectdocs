@@ -25,7 +25,7 @@ close $fh;
 
 like $html, qr!See <a href="#SYNOPSIS">&quot;SYNOPSIS&quot;</a> for its usage!;
 like $html, qr!<a href="http://www.perl.org/">http://www.perl.org/</a>!;
-like $html, qr!<a href="http://search.cpan.org/perldoc\?perlpod">Perl POD Syntax</a>!;
+like $html, qr!<a href="http://metacpan.org/module/perlpod">Perl POD Syntax</a>!;
 like $html, qr!href="../podstyle.css"!;
 like $html, qr!href="../index.html"!;
 like $html, qr!href="../src/Sample/Project.pm"!;
