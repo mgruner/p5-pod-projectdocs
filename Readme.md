@@ -98,8 +98,8 @@ without creating a custom perl script.
 
 # COPYRIGHT AND LICENSE
 
-Copyright(C) 2005 by Lyo Kato
-Copyright(C) 2017 by Martin Gruner
+- Copyright(C) 2005 by Lyo Kato
+- Copyright(C) 2017 by Martin Gruner
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.5 or,
