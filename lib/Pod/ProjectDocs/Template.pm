@@ -47,8 +47,8 @@ has '_tt' => (
 sub process {
     my ( $self, $doc, $data, $output ) = @_;
     $self->_curpath( $doc->get_output_path );
-    $self->{_tt}->process( \$data, $output, \my $text )
-      or Carp::croak( $self->{_tt}->error );
+    $self->_tt()->process( \$data, $output, \my $text )
+      or Carp::croak( $self->_tt()->error );
     $self->_curpath('');
     return $text;
 }

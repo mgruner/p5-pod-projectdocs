@@ -100,7 +100,7 @@ sub gen {
 
     foreach my $manager ( @{ $self->managers } ) {
         next if $manager->desc !~ /Perl Modules/;
-        for my $doc ( $manager->get_docs() ) {
+        for my $doc ( @{ $manager->docs() || [] } ) {
             my $name = $doc->name;
             my $path = $doc->get_output_path;
             if ( $manager->desc eq 'Perl Modules' ) {
@@ -113,7 +113,7 @@ sub gen {
 
         $manager->parser->local_modules( \%local_modules );
 
-        for my $doc ( $manager->get_docs() ) {
+        for my $doc ( @{ $manager->docs() || [] } ) {
             my $html = $manager->parser->gen_html(
                 doc        => $doc,
                 desc       => $manager->desc,

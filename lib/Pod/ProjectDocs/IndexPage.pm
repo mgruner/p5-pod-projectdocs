@@ -21,7 +21,10 @@ has 'json' => (
     isa => 'Str',
 );
 
-has 'components' => ( is => 'rw', );
+has 'components' => (
+    is  => 'rw',
+    isa => 'HashRef',
+);
 
 has 'data' => (
     is      => 'ro',
