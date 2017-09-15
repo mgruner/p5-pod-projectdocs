@@ -33,6 +33,10 @@ has 'config' => (
 sub BUILDARGS {
     my ( $class, %args ) = @_;
 
+    $args{title} ||= "MyProject's Libraries";
+    $args{desc}  ||= "manuals and libraries";
+    $args{lang}  ||= "en";
+
     # set absolute path to 'outroot'
     $args{outroot} ||= File::Spec->curdir;
     $args{outroot} = File::Spec->rel2abs( $args{outroot}, File::Spec->curdir )
