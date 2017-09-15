@@ -10,22 +10,16 @@ use File::Find;
 use IO::File;
 use Pod::ProjectDocs::Doc;
 
-has 'config' => (
-    is => 'ro',
-);
+has 'config' => ( is => 'ro', );
 has 'desc' => (
-    is => 'rw',
+    is  => 'rw',
     isa => 'Str',
 );
-has 'suffix' => (
-    is => 'rw',
-);
-has 'parser' => (
-    is => 'ro',
-);
-has 'docs' => (
-    is => 'rw',
-    isa => 'ArrayRef',
+has 'suffix' => ( is => 'rw', );
+has 'parser' => ( is => 'ro', );
+has 'docs'   => (
+    is      => 'rw',
+    isa     => 'ArrayRef',
     default => sub { [] },
 );
 
@@ -43,7 +37,7 @@ sub _find_files {
         }
     }
     my $suffixs = $self->suffix;
-    $suffixs = [ $suffixs] if !ref $suffixs;
+    $suffixs = [$suffixs] if !ref $suffixs;
     foreach my $dir ( @{ $self->config->libroot } ) {
         foreach my $suffix (@$suffixs) {
             my $wanted = sub {
@@ -67,7 +61,8 @@ sub _find_files {
                 }
 
                 # check if there is actually any POD inside, skip otherwise
-                my $content = join('', IO::File->new( $File::Find::name, 'r' )->getlines());
+                my $content = join( '',
+                    IO::File->new( $File::Find::name, 'r' )->getlines() );
                 $matched = 1 if $content !~ m{^=(head1|head2|item|cut)}ismxg;
 
                 unless ($matched) {

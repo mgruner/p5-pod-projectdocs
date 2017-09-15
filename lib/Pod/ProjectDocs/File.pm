@@ -8,31 +8,27 @@ use warnings;
 use Moose;
 use IO::File;
 
-has 'data' => (
-    is => 'ro',
-);
+has 'data' => ( is => 'ro', );
 
 has 'default_name' => (
-    is => 'ro',
+    is  => 'ro',
     isa => 'Str',
 );
 
 has 'is_bin' => (
-    is => 'rw',
+    is      => 'rw',
     default => 0,
 );
 
-has 'config' => (
-    is => 'ro',
-);
+has 'config' => ( is => 'ro', );
 
 has 'name' => (
-    is => 'rw',
+    is  => 'rw',
     isa => 'Str',
 );
 
 has 'relpath' => (
-    is => 'rw',
+    is  => 'rw',
     isa => 'Str',
 );
 
@@ -42,15 +38,16 @@ sub _get_data {
 }
 
 sub publish {
-    my($self, $data) = @_;
+    my ( $self, $data ) = @_;
     $data ||= $self->_get_data();
     my $path = $self->get_output_path;
     my $mode = ">>";
     if ( $path =~ m/html$/ ) {
-        $mode .= ':encoding(UTF-8)' ;
+        $mode .= ':encoding(UTF-8)';
     }
-    my $fh = IO::File->new($path, $mode) or $self->_croak(qq/Can't open $path./);
-    $fh->seek(0, 0);
+    my $fh = IO::File->new( $path, $mode )
+      or $self->_croak(qq/Can't open $path./);
+    $fh->seek( 0, 0 );
     $fh->truncate(0);
     $fh->print($data);
     $fh->close;
@@ -58,15 +55,15 @@ sub publish {
 }
 
 sub get_output_path {
-    my $self = shift;
+    my $self    = shift;
     my $outroot = $self->config->outroot;
     my $relpath = $self->relpath || $self->default_name;
-    my $path = File::Spec->catfile($outroot, $relpath);
+    my $path    = File::Spec->catfile( $outroot, $relpath );
     return $path;
 }
 
 sub _croak {
-    my($self, $msg) = @_;
+    my ( $self, $msg ) = @_;
     require Carp;
     Carp::croak($msg);
     return;

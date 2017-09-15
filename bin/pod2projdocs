@@ -9,7 +9,7 @@ use Getopt::Long;
 use Pod::Usage;
 use Pod::ProjectDocs;
 
-my($out, $lib, $title, $lang, $desc, $index, $verbose, $forcegen, $except);
+my ( $out, $lib, $title, $lang, $desc, $index, $verbose, $forcegen, $except );
 my $help = @ARGV == 0;
 
 my %opt = (

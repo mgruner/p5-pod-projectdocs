@@ -8,50 +8,50 @@ use warnings;
 use Moose;
 
 has 'title' => (
-    is => 'ro',
+    is      => 'ro',
     default => "MyProject's Libraries",
-    isa => 'Str',
+    isa     => 'Str',
 );
 
 has 'desc' => (
-    is => 'ro',
+    is      => 'ro',
     default => "manuals and libraries",
-    isa => 'Str',
+    isa     => 'Str',
 );
 
 has 'verbose' => (
-    is => 'ro',
+    is  => 'ro',
     isa => 'Bool',
 );
 
 has 'index' => (
-    is => 'ro',
+    is  => 'ro',
     isa => 'Bool',
 );
 
 has 'forcegen' => (
-    is => 'ro',
+    is  => 'ro',
     isa => 'Bool',
 );
 
 has 'outroot' => (
-    is => 'ro',
+    is  => 'ro',
     isa => 'Str',
 );
 
 has 'libroot' => (
-    is => 'ro',
+    is  => 'ro',
     isa => 'ArrayRef[Str]'
 );
 
 has 'lang' => (
-    is => 'ro',
+    is      => 'ro',
     default => 'en',
-    isa => 'Str',
+    isa     => 'Str',
 );
 
 has 'except' => (
-    is => 'ro',
+    is  => 'ro',
     isa => 'ArrayRef[Str]'
 );
 

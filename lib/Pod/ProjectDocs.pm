@@ -16,13 +16,13 @@ use Pod::ProjectDocs::CSS;
 use Pod::ProjectDocs::IndexPage;
 
 has 'managers' => (
-    is  => 'rw',
-    isa => 'ArrayRef',
+    is      => 'rw',
+    isa     => 'ArrayRef',
     default => sub { [] },
 );
 has 'components' => (
-    is  => 'rw',
-    isa => 'HashRef',
+    is      => 'rw',
+    isa     => 'HashRef',
     default => sub { {} },
 );
 has 'config' => (
@@ -31,20 +31,23 @@ has 'config' => (
 );
 
 sub BUILDARGS {
-    my($class, %args) = @_;
+    my ( $class, %args ) = @_;
 
     # set absolute path to 'outroot'
     $args{outroot} ||= File::Spec->curdir;
-    $args{outroot} = File::Spec->rel2abs($args{outroot}, File::Spec->curdir)
-        unless File::Spec->file_name_is_absolute( $args{outroot} );
+    $args{outroot} = File::Spec->rel2abs( $args{outroot}, File::Spec->curdir )
+      unless File::Spec->file_name_is_absolute( $args{outroot} );
 
     # set absolute path to 'libroot'
     $args{libroot} ||= File::Spec->curdir;
     $args{libroot} = [ $args{libroot} ] unless ref $args{libroot};
-    $args{libroot} = [ map {
-        File::Spec->file_name_is_absolute($_) ? $_
-        : File::Spec->rel2abs($_, File::Spec->curdir)
-    } @{ $args{libroot} } ];
+    $args{libroot} = [
+        map {
+            File::Spec->file_name_is_absolute($_)
+              ? $_
+              : File::Spec->rel2abs( $_, File::Spec->curdir )
+        } @{ $args{libroot} }
+    ];
 
     # check mtime by default, but can be overridden
     $args{forcegen} ||= 0;
@@ -60,23 +63,28 @@ sub BUILDARGS {
 sub BUILD {
     my $self = shift;
 
-    $self->components->{css} = Pod::ProjectDocs::CSS->new( config => $self->config );
-    $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::Parser->new);
-    $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::Parser->new);
-    $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::Parser->new);
+    $self->components->{css} =
+      Pod::ProjectDocs::CSS->new( config => $self->config );
+    $self->add_manager( 'Perl Manuals', 'pod', Pod::ProjectDocs::Parser->new );
+    $self->add_manager( 'Perl Modules', 'pm',  Pod::ProjectDocs::Parser->new );
+    $self->add_manager(
+        'Trigger Scripts',
+        [ 'cgi', 'pl' ],
+        Pod::ProjectDocs::Parser->new
+    );
 
     return;
 }
 
 sub add_manager {
-    my($self, $desc, $suffix, $parser) = @_;
+    my ( $self, $desc, $suffix, $parser ) = @_;
     push @{ $self->managers },
-        Pod::ProjectDocs::DocManager->new(
-            config => $self->config,
-            desc   => $desc,
-            suffix => $suffix,
-            parser => $parser,
-        );
+      Pod::ProjectDocs::DocManager->new(
+        config => $self->config,
+        desc   => $desc,
+        suffix => $suffix,
+        parser => $parser,
+      );
     return;
 }
 
@@ -95,7 +103,7 @@ sub gen {
         for my $doc ( $manager->get_docs() ) {
             my $name = $doc->name;
             my $path = $doc->get_output_path;
-            if ($manager->desc eq 'Perl Modules') {
+            if ( $manager->desc eq 'Perl Modules' ) {
                 $local_modules{$name} = $path;
             }
         }
@@ -138,23 +146,25 @@ sub get_managers_json {
             records => [],
         };
         foreach my $doc ( @{ $manager->docs } ) {
-            push @{ $record->{records} }, {
+            push @{ $record->{records} },
+              {
                 path  => $doc->relpath,
                 name  => $doc->name,
                 title => $doc->title,
-            };
+              };
         }
         if ( scalar( @{ $record->{records} } ) > 0 ) {
             push @$records, $record;
         }
     }
+
     # Use "canonical" to generate stable structures that can be added
     #   to version control systems without changing all the time.
     return $js->canonical()->encode($records);
 }
 
 sub _croak {
-    my($self, $msg) = @_;
+    my ( $self, $msg ) = @_;
     require Carp;
     Carp::croak($msg);
     return;

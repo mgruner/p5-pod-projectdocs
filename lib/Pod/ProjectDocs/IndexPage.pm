@@ -11,22 +11,20 @@ extends 'Pod::ProjectDocs::File';
 use Pod::ProjectDocs::Template;
 
 has 'default_name' => (
-    is => 'ro',
-    isa => 'Str',
+    is      => 'ro',
+    isa     => 'Str',
     default => 'index.html',
 );
 
 has 'json' => (
-    is => 'rw',
+    is  => 'rw',
     isa => 'Str',
 );
 
-has 'components' => (
-    is => 'rw',
-);
+has 'components' => ( is => 'rw', );
 
 has 'data' => (
-    is => 'ro',
+    is      => 'ro',
     default => <<'DATA',
 <!DOCTYPE html>
 <html lang="[% lang %]" xml:lang="[% lang %]">
@@ -114,17 +112,17 @@ DATA
 );
 
 sub _get_data {
-    my $self = shift;
+    my $self   = shift;
     my $params = {
-        title    => $self->config->title,
-        desc     => $self->config->desc,
-        lang     => $self->config->lang,
-        json     => $self->json,
-        charset  => 'UTF-8',
+        title            => $self->config->title,
+        desc             => $self->config->desc,
+        lang             => $self->config->lang,
+        json             => $self->json,
+        charset          => 'UTF-8',
         css_relative_url => $self->components->{css}->relative_url($self),
     };
     my $tt = Pod::ProjectDocs::Template->new;
-    my $text = $tt->process($self, $self->data, $params);
+    my $text = $tt->process( $self, $self->data, $params );
     return $text;
 }
 
