@@ -10,6 +10,7 @@ use Moose;
 use Template;
 use File::Basename;
 use File::Spec;
+use Carp();
 
 has '_curpath' => (
     is      => 'rw',
@@ -47,16 +48,9 @@ sub process {
     my ( $self, $doc, $data, $output ) = @_;
     $self->_curpath( $doc->get_output_path );
     $self->{_tt}->process( \$data, $output, \my $text )
-      or $self->_croak( $self->{_tt}->error );
+      or Carp::croak( $self->{_tt}->error );
     $self->_curpath('');
     return $text;
-}
-
-sub _croak {
-    my ( $self, $msg ) = @_;
-    require Carp;
-    Carp::croak($msg);
-    return;
 }
 
 1;

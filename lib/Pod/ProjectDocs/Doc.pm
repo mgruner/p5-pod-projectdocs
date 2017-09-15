@@ -11,6 +11,7 @@ extends 'Pod::ProjectDocs::File';
 use File::Basename;
 use File::Spec;
 use File::Copy;
+use Carp();
 
 has 'origin' => (
     is  => 'rw',
@@ -99,7 +100,7 @@ sub _mkdir {
     my ( $self, $path ) = @_;
     unless ( -e $path && -d _ ) {
         mkdir( $path, 0755 )
-          or $self->_croak(qq/Can't make directory [$path]./);
+          or Carp::croak(qq/Can't make directory [$path]./);
     }
     return;
 }

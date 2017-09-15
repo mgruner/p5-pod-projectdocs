@@ -6,6 +6,7 @@ use warnings;
 # VERSION
 
 use Moose;
+use Carp();
 use File::Find;
 use IO::File;
 use Pod::ProjectDocs::Doc;
@@ -33,7 +34,7 @@ sub _find_files {
     my $self = shift;
     foreach my $dir ( @{ $self->config->libroot } ) {
         unless ( -e $dir && -d _ ) {
-            $self->_croak(qq/$dir isn't detected or it's not a directory./);
+            Carp::croak(qq/$dir isn't detected or it's not a directory./);
         }
     }
     my $suffixs = $self->suffix;
@@ -80,17 +81,6 @@ sub _find_files {
     }
     $self->docs( [ sort { $a->name cmp $b->name } @{ $self->docs } ] );
     return;
-}
-
-sub get_docs {
-    my $self = shift;
-    return @{ $self->docs };
-}
-
-sub _croak {
-    my ( $self, $msg ) = @_;
-    require Carp;
-    Carp::croak($msg);
 }
 
 1;
