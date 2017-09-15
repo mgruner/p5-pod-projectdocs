@@ -16,13 +16,18 @@ use Pod::ProjectDocs::CSS;
 use Pod::ProjectDocs::IndexPage;
 
 has 'managers' => (
-    is => 'rw',
+    is  => 'rw',
+    isa => 'ArrayRef',
+    default => sub { [] },
 );
 has 'components' => (
-    is => 'rw',
+    is  => 'rw',
+    isa => 'HashRef',
+    default => sub { {} },
 );
 has 'config' => (
-    is => 'rw',
+    is  => 'ro',
+    isa => 'Object',
 );
 
 sub BUILDARGS {
@@ -55,31 +60,11 @@ sub BUILDARGS {
 sub BUILD {
     my $self = shift;
 
-    $self->_setup_components();
-    $self->_setup_managers();
-    return;
-}
-
-sub _setup_components {
-    my $self = shift;
-    $self->components( {} );
-    $self->components->{css}
-        = Pod::ProjectDocs::CSS->new( config => $self->config );
-    return;
-}
-
-sub _setup_managers {
-    my $self = shift;
-    $self->reset_managers();
+    $self->components->{css} = Pod::ProjectDocs::CSS->new( config => $self->config );
     $self->add_manager('Perl Manuals', 'pod', Pod::ProjectDocs::Parser->new);
     $self->add_manager('Perl Modules', 'pm',  Pod::ProjectDocs::Parser->new);
     $self->add_manager('Trigger Scripts', ['cgi', 'pl'], Pod::ProjectDocs::Parser->new);
-    return;
-}
 
-sub reset_managers {
-    my $self = shift;
-    $self->managers( [] );
     return;
 }
 

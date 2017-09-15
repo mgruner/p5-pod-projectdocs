@@ -1,4 +1,4 @@
-## 0.48_003 2017-09-14
+## 0.48_004 2017-09-14
 - Switch to metacpan for perldoc links.
 - Ported to Moose.
 

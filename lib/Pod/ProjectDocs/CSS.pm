@@ -10,6 +10,12 @@ extends 'Pod::ProjectDocs::File';
 
 use File::Basename;
 
+has 'default_name' => (
+    is => 'ro',
+    isa => 'Str',
+    default => 'podstyle.css',
+);
+
 has 'data' => (
     is => 'ro',
     default => <<'DATA',
@@ -367,12 +373,6 @@ table.dlsip     {
 }
 DATA
 );
-
-sub BUILD {
-    my $self = shift;
-    $self->default_name('podstyle.css');
-    return;
-}
 
 sub relative_url {
     my($self, $doc) = @_;

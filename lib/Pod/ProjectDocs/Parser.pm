@@ -5,25 +5,15 @@ use warnings;
 
 # VERSION
 
+use Moose;
+
 use Pod::ProjectDocs::Parser::XHTML;
 use Pod::ProjectDocs::Template;
 
-sub new {
-    my $class = shift;
-    my $self = {};
-    bless $self, $class;
-    return $self;
-}
-
-sub local_modules {
-    my ($self, $modules) = @_;
-
-    if (defined $modules) {
-        $self->{_local_modules} = $modules;
-    }
-
-    return $self->{_local_modules};
-}
+has 'local_modules' => (
+    is  => 'rw',
+    isa => 'HashRef',
+);
 
 sub gen_html {
     my($self, %args) = @_;

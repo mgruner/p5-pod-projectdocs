@@ -13,7 +13,7 @@ has 'data' => (
 );
 
 has 'default_name' => (
-    is => 'rw',
+    is => 'ro',
     isa => 'Str',
 );
 

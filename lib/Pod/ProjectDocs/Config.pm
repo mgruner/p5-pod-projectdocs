@@ -21,15 +21,17 @@ has 'desc' => (
 
 has 'verbose' => (
     is => 'ro',
-    # TODO: boolean
+    isa => 'Bool',
 );
 
 has 'index' => (
     is => 'ro',
+    isa => 'Bool',
 );
 
 has 'forcegen' => (
     is => 'ro',
+    isa => 'Bool',
 );
 
 has 'outroot' => (
@@ -39,6 +41,7 @@ has 'outroot' => (
 
 has 'libroot' => (
     is => 'ro',
+    isa => 'ArrayRef[Str]'
 );
 
 has 'lang' => (
@@ -49,6 +52,7 @@ has 'lang' => (
 
 has 'except' => (
     is => 'ro',
+    isa => 'ArrayRef[Str]'
 );
 
 1;

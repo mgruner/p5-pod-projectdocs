@@ -71,7 +71,7 @@ sub _find_files {
                 $matched = 1 if $content !~ m{^=(head1|head2|item|cut)}ismxg;
 
                 unless ($matched) {
-                    push @{ $self->docs // [] },
+                    push @{ $self->docs },
                       Pod::ProjectDocs::Doc->new(
                         config      => $self->config,
                         origin      => $path,

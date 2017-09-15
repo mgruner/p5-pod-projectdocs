@@ -56,6 +56,7 @@ DATA
 
 sub BUILD {
     my $self = shift;
+    # This must be done after the other data is available.
     $self->_set_relpath;
     return;
 }

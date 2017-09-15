@@ -5,45 +5,49 @@ use warnings;
 
 # VERSION
 
+use Moose;
+
 use Template;
 use File::Basename;
 use File::Spec;
 
-sub new {
-    my ($class, @args) = @_;
-    my $self  = bless { }, $class;
-    $self->_init(@args);
-    return $self;
-}
+has '_curpath' => (
+    is => 'rw',
+    isa => 'Str',
+    default => '',
+);
 
-sub _init {
-    my $self = shift;
-    $self->{_curpath} = '';
-    $self->{_tt} = Template->new( {
-        FILTERS => {
-            relpath => sub {
-                my $path = shift;
-                my $curpath = $self->{_curpath};
-                my($name, $dir) = fileparse $curpath, qr/\.html/;
-                return File::Spec->abs2rel($path, $dir);
+has '_tt' => (
+    is => 'ro',
+    isa => 'Object',
+    default => sub {
+        my $self = shift;
+        Template->new( {
+            FILTERS => {
+                relpath => sub {
+                    my $path = shift;
+                    my $curpath = $self->_curpath();
+                    my($name, $dir) = fileparse $curpath, qr/\.html/;
+                    return File::Spec->abs2rel($path, $dir);
+                },
+                return2br => sub {
+                    my $text = shift;
+                    $text =~ s!\r\n!<br />!g;
+                    $text =~ s!\n!<br />!g;
+                    return $text;
+                }
             },
-            return2br => sub {
-                my $text = shift;
-                $text =~ s!\r\n!<br />!g;
-                $text =~ s!\n!<br />!g;
-                return $text;
-            }
-        },
-    } );
-    return;
-}
+        } );
+    },
+);
+
 
 sub process {
     my($self, $doc, $data, $output) = @_;
-    $self->{_curpath} = $doc->get_output_path;
+    $self->_curpath( $doc->get_output_path );
     $self->{_tt}->process(\$data, $output, \my $text)
         or $self->_croak($self->{_tt}->error);
-    $self->{_curpath} = '';
+    $self->_curpath('');
     return $text;
 }
 

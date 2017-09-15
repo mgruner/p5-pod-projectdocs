@@ -10,11 +10,11 @@ extends 'Pod::ProjectDocs::File';
 
 use Pod::ProjectDocs::Template;
 
-sub BUILD {
-    my $self = shift;
-    $self->default_name('index.html');
-    return;
-}
+has 'default_name' => (
+    is => 'ro',
+    isa => 'Str',
+    default => 'index.html',
+);
 
 has 'json' => (
     is => 'rw',
