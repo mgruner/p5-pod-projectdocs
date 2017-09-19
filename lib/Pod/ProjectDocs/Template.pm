@@ -5,7 +5,7 @@ use warnings;
 
 # VERSION
 
-use Moose;
+use Moose::Role;
 
 use Template;
 use File::Basename;

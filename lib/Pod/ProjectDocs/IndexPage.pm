@@ -6,9 +6,7 @@ use warnings;
 # VERSION
 
 use Moose;
-extends 'Pod::ProjectDocs::File';
-
-use Pod::ProjectDocs::Template;
+with 'Pod::ProjectDocs::File', 'Pod::ProjectDocs::Template';
 
 has 'default_name' => (
     is      => 'ro',
@@ -124,8 +122,7 @@ sub _get_data {
         charset          => 'UTF-8',
         css_relative_url => $self->components->{css}->relative_url($self),
     };
-    my $tt = Pod::ProjectDocs::Template->new;
-    my $text = $tt->process( $self, $self->data, $params );
+    my $text = $self->process( $self, $self->data, $params );
     return $text;
 }
 

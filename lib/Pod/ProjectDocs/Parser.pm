@@ -6,9 +6,9 @@ use warnings;
 # VERSION
 
 use Moose;
+with 'Pod::ProjectDocs::Template';
 
 use Pod::ProjectDocs::Parser::XHTML;
-use Pod::ProjectDocs::Template;
 
 has 'local_modules' => (
     is  => 'rw',
@@ -66,8 +66,7 @@ sub gen_html {
 
 sub _generate_header_box {
     my ( $self, $doc, $mgr_desc ) = @_;
-    my $tt   = Pod::ProjectDocs::Template->new;
-    my $text = $tt->process(
+    my $text = $self->process(
         $doc,
         $doc->data,
         {

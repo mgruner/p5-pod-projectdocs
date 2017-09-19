@@ -6,7 +6,7 @@ use warnings;
 # VERSION
 
 use Moose;
-extends 'Pod::ProjectDocs::File';
+with 'Pod::ProjectDocs::File';
 
 use File::Basename;
 
