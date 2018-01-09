@@ -34,6 +34,11 @@ has 'forcegen' => (
     isa => 'Bool',
 );
 
+has 'nosourcecode' => (
+    is  => 'ro',
+    isa => 'Bool',
+);
+
 has 'outroot' => (
     is  => 'ro',
     isa => 'Str',

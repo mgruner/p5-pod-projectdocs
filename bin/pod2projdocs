@@ -9,7 +9,7 @@ use Getopt::Long;
 use Pod::Usage;
 use Pod::ProjectDocs;
 
-my ( $out, $lib, $title, $lang, $desc, $index, $verbose, $forcegen, $except );
+my ( $out, $lib, $title, $lang, $desc, $index, $verbose, $forcegen, $nosourcecode, $except );
 my $help = @ARGV == 0;
 
 my %opt = (
@@ -22,6 +22,7 @@ my %opt = (
     'index!'      => \$index,
     'verbose|v'   => \$verbose,
     'forcegen!'   => \$forcegen,
+    'nosourcecode!' => \$nosourcecode,
     'lang=s'      => \$lang,
 );
 
@@ -38,6 +39,7 @@ my $p = Pod::ProjectDocs->new(
     index    => $index,
     verbose  => $verbose,
     forcegen => $forcegen,
+    nosourcecode => $nosourcecode,
     lang     => $lang,
 );
 $p->gen();

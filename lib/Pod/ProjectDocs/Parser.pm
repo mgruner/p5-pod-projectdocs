@@ -76,6 +76,7 @@ sub _generate_header_box {
             outroot  => $doc->config->outroot,
             src      => $doc->get_output_src_path,
             mgr_desc => $mgr_desc,
+            nosourcecode => $doc->config->nosourcecode,
         }
     );
     return $text if $^O ne 'MSWin32';

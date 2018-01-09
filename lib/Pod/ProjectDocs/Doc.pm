@@ -50,7 +50,9 @@ has 'data' => (
   [% name | html %]
 </div>
 <div>
+[% IF !nosourcecode %]
 <a href="[% src | relpath %]">Source</a>
+[% END %]
 </div>
 DATA
 );
