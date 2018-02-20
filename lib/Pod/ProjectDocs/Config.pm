@@ -57,7 +57,7 @@ has 'lang' => (
 
 has 'except' => (
     is  => 'ro',
-    isa => 'ArrayRef[Str]'
+    isa => 'ArrayRef[Str | RegexpRef]'
 );
 
 1;
