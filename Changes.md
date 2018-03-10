@@ -1,3 +1,6 @@
+## 0.52 2018-??-??
+- Added missing style information for <h3> and <h4>.
+
 ## 0.51 2018-02-20
 - Allow regexp objects to be passed as value for 'except', thanks to Erik Huelsmann.
 
