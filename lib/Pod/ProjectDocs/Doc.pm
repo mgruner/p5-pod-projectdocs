@@ -77,7 +77,7 @@ sub _set_relpath {
     my $relpath = File::Spec->catdir( $reldir, $name );
     $relpath =~ s:\\:/:g if $^O eq 'MSWin32';
 
-    if ( lc $suffix eq 'pm' ) {
+    if ( lc $suffix eq 'pm' || lc $suffix eq 'pod' ) {
         $self->name( join "::", File::Spec->splitdir($relpath) );
     }
     else {

@@ -105,13 +105,11 @@ sub gen {
     my %local_modules;
 
     foreach my $manager ( @{ $self->managers } ) {
-        next if $manager->desc !~ /Perl Modules/;
+        next if $manager->desc !~ /^Perl/;
         for my $doc ( @{ $manager->docs() || [] } ) {
             my $name = $doc->name;
             my $path = $doc->get_output_path;
-            if ( $manager->desc eq 'Perl Modules' ) {
-                $local_modules{$name} = $path;
-            }
+            $local_modules{$name} = $path;
         }
     }
 
