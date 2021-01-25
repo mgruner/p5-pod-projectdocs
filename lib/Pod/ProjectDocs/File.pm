@@ -63,5 +63,7 @@ sub get_output_path {
     return $path;
 }
 
+no Moose::Role;
+
 1;
 __END__

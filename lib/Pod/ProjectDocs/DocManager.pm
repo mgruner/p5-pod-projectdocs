@@ -83,5 +83,7 @@ sub _find_files {
     return;
 }
 
+no Moose;
+
 1;
 __END__

@@ -87,4 +87,6 @@ sub _generate_header_box {
     return $text;
 }
 
+no Moose;
+
 1;

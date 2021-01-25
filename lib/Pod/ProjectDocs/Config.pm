@@ -60,5 +60,7 @@ has 'except' => (
     isa => 'ArrayRef[Str | RegexpRef]'
 );
 
+no Moose;
+
 1;
 __END__

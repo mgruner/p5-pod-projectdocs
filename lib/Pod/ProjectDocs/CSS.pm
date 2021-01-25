@@ -395,4 +395,6 @@ sub relative_url {
     return $relpath;
 }
 
+no Moose;
+
 1;

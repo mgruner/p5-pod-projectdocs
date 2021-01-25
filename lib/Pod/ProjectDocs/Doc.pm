@@ -133,4 +133,6 @@ sub is_modified {
     return ( -M $origin < -M $newsrc ) ? 1 : 0;
 }
 
+no Moose;
+
 1;

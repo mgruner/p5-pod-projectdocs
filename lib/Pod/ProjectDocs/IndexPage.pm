@@ -126,4 +126,6 @@ sub _get_data {
     return $text;
 }
 
+no Moose;
+
 1;
